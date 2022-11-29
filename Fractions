@@ -1,0 +1,141 @@
+//fractions, p 23 #3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+class Fraction{
+public:
+  //constructors                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+  Fraction() : num(0) , denom(-1) {};
+  Fraction(int n, int d) : num(n), denom(d) {};
+  Fraction(int n) : num(n), denom(1) {};
+
+  //mutators                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+  Fraction mult(const Fraction &f2) const;
+  Fraction add(const Fraction &f2) const;
+
+
+
+  void read(){
+    cin >> num;
+    cin.ignore();
+    cin>>denom;
+  }
+
+  void write()const{
+    cout<< num << '/' << denom;
+
+  }
+  void setn(int n){num = n;}
+  void setd(int d){denom = d;}
+  void set (int n, int d = 1) {num = n; denom = d;}
+
+
+  Fraction operator + (const Fraction &f2);
+  friend Fraction operator * (const Fraction &f1, const Fraction &f2);
+  friend ostream & operator << (ostream & out, const Fraction &f);
+  friend istream & operator >> (istream & in, Fraction &f);
+  friend bool operator < (const Fraction &f1, const Fraction &f2);
+ //accessors                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+  int getn(){return num;}
+  int getd(){return denom;}
+
+
+private:
+  int num;
+  int denom;
+};
+bool operator < (const Fraction &f1, const Fraction &f2)
+{
+  int d;
+  d = f1.denom * f2.denom;
+  return(((f2.denom*f1.num)/ d) < ((f1.denom * f2.num) / d));
+
+}
+istream & operator >> (istream & in, Fraction &f){
+  cin >> f.num;
+  cin.ignore();
+  cin>>f.denom;
+  return(istream);
+
+}
+
+
+ostream & operator << (ostream & out, const Fraction &f){
+  out <<f.num << '/' <<f.denom;
+  return out;
+}
+
+Fraction operator * (const Fraction &f1, const Fraction &f2){
+  Fraction temp;
+  temp.num = f1.num * f2.num;
+  temp.denom = f1.denom * f2.denom;
+  return (temp);
+
+}
+
+Fraction Fraction:: mult (const Fraction &f2) const
+{
+  Fraction temp;
+  temp.num = num * f2.num;
+  temp.denom = denom * f2.denom;
+  return (temp);
+}
+Fraction Fraction::operator + (const Fraction &f2){
+  Fraction temp;
+  temp.denom = denom * f2.denom;
+  temp.num = num * f2.denom + f2.num * denom;
+  return temp;
+}
+inline Fraction Fraction::add(const Fraction &f2) const
+{
+  Fraction temp;
+  temp.denom = denom * f2.denom;
+  temp.num = num * f2.denom + f2.num * denom;
+  return temp;
+}
+
+void write_underscore(Fraction f){
+  int n,d;
+
+
+  n = f.getn();
+  d = f.getd();
+
+  cout << n;
+  cout << endl;
+  cout<< "------" << endl;
+  cout << d << endl;
+
+}
+
+int main(){
+  Fraction f1(1,2);
+  Fraction f2;
+  cin >> f1;
+  f2 = f1.add(6);
+  //f2.write ();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+  cout << f2;
+
+  cout << endl;
+
+  f2 = f1 + 6;
+
+  f2.write();
+  cout<<endl;
+
+  Fraction f3;
+  f3 = f1* 10;
+  f3.write();
+  cout<< endl;
+  bool less_than = f3<f2;
+  cout << f3 << " " << f2;
+  cout<<endl;
+  less_than = f3 < f2;
+  // cout << boolalpha <<                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+
+  cout<< endl;
+
+  return 0;
+}
