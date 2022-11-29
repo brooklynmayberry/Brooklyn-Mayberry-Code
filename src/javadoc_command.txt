@@ -1,0 +1,4 @@
+javadoc -d doc --source-path src main data
+
+This is the javadoc command.
+

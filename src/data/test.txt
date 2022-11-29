@@ -1,0 +1,15 @@
+ BRAVE NEW WORLD
+This
+is
+a
+test
+file for
+some \n things.
+
+int
+
+chart
+
+9(2) = 4 by math
+
+useDelimiter();
