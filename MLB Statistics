@@ -1,0 +1,306 @@
+library(tidyverse)
+library(readxl)
+MLB_Pitchers_2021 <- read_excel("~/Desktop/STAT383/MLB_Pitchers_2021.xlsx")
+View(MLB_Pitchers_2021)
+
+#Creates the subset with our constraints
+MLB_SP_QUA <- subset(MLB_Pitchers_2021, GS > 9 & IP > 59.9)
+
+#Omits the league average row
+MLB_SP_QUA_NAomit <- na.omit(MLB_SP_QUA)
+
+MLB_SP_QUA_NAomit$ERA <- as.numeric(as.character(MLB_SP_QUA_NAomit$ERA))
+
+#Creates a subset for pitchers that's age is equal to or greater than 28
+Over_Equal_28 <- subset(MLB_SP_QUA_NAomit, Age >= 28)
+
+
+#Changes ERA from discrete to continuous
+
+MLB_Pitchers_2021$ERA <- as.numeric(as.character(MLB_Pitchers_2021$ERA))
+
+
+
+#Scatter Plot with Age vs ERA, plus the linear regression line
+MLB_SP_QUA_NAomit %>% 
+  ggplot(aes(x = Age, y = ERA))+
+  geom_point()+
+  geom_smooth(method = "lm", col = "red")+
+  scale_y_continuous(label = ~ scales::comma(.x, accuracy = 0.50))+
+  ggtitle("Age vs ERA Scatter Plot")
+
+
+
+#Scatter Plot with Age vs WHIP, plus the linear regression line
+MLB_SP_QUA_NAomit %>% 
+  ggplot(aes(x = Age, y = WHIP))+
+  geom_point()+
+  geom_smooth(method = "lm", col = "red")+
+  scale_y_continuous(label = ~ scales::comma(.x, accuracy = 0.50))+
+  ggtitle("Age vs WHIP Scatter Plot")
+
+
+
+#Scatter Plot with Age vs SO9, plus the linear regression line
+MLB_SP_QUA_NAomit %>% 
+  ggplot(aes(x = Age, y = SO9))+
+  geom_point()+
+  geom_smooth(method = "lm", col = "red")+
+  scale_y_continuous(label = ~ scales::comma(.x, accuracy = 0.50))+
+  ggtitle("Age vs SO/9 Scatter Plot")
+
+
+
+#Scatter Plot with Age vs BB9, plus the linear regression line
+MLB_SP_QUA_NAomit %>% 
+  ggplot(aes(x = Age, y = BB9))+
+  geom_point()+
+  geom_smooth(method = "lm", col = "red")+
+  scale_y_continuous(label = ~ scales::comma(.x, accuracy = 0.50))+
+  ggtitle("Age vs BB/9 Scatter Plot")
+
+
+
+#Scatter Plot with Age vs HR9, plus the linear regression line
+MLB_SP_QUA_NAomit %>% 
+  ggplot(aes(x = Age, y = HR9))+
+  geom_point()+
+  geom_smooth(method = "lm", col = "red")+
+  scale_y_continuous(label = ~ scales::comma(.x, accuracy = 0.50))+
+  ggtitle("Age vs HR/9 Scatter Plot")
+
+
+
+#Summary of Age vs ERA
+Age_VS_ERA <- MLB_SP_QUA_NAomit[,c("Age", "ERA")]
+Age_VS_ERA_mod <- lm(ERA ~ Age,data = Age_VS_ERA)
+summary(Age_VS_ERA_mod)
+
+
+#Summary of Age vs SO9
+Age_VS_SO9 <- MLB_SP_QUA_NAomit[,c("Age", "SO9")]
+Age_VS_SO9_mod <- lm(SO9 ~ Age,data = Age_VS_SO9)
+summary(Age_VS_SO9_mod)
+
+
+#Summary of Age vs BB9
+Age_VS_BB9 <- MLB_SP_QUA_NAomit[,c("Age", "BB9")]
+Age_VS_BB9_mod <- lm(BB9 ~ Age,data = Age_VS_BB9)
+summary(Age_VS_BB9_mod)
+
+
+#Summary of Age vs WHIP
+Age_VS_WHIP <- MLB_SP_QUA_NAomit[,c("Age", "WHIP")]
+Age_VS_WHIP_mod <- lm(WHIP ~ Age,data = Age_VS_WHIP)
+summary(Age_VS_WHIP_mod)
+
+
+#Summary of Age vs HR9
+Age_VS_HR9 <- MLB_SP_QUA_NAomit[,c("Age", "HR9")]
+Age_VS_HR9_mod <- lm(HR9 ~ Age,data = Age_VS_HR9)
+summary(Age_VS_HR9_mod)
+
+
+
+#Bar Graph for Age vs ERA
+  MLB_SP_QUA_NAomit %>% 
+    ggplot(aes(x = Age, y = ERA))+
+    geom_bar(stat = "identity")
+  
+   
+  #Bar Graph for Age vs WHIP 
+  MLB_SP_QUA_NAomit %>% 
+    ggplot(aes(x = Age, y = WHIP))+
+    geom_bar(stat = "identity")
+  
+  
+  #Bar Graph for Age vs SO9
+  MLB_SP_QUA_NAomit %>% 
+    ggplot(aes(x = Age, y = SO9))+
+    geom_bar(stat = "identity")
+  
+  
+  #Bar Graph for Age vs BB9
+  MLB_SP_QUA_NAomit %>% 
+    ggplot(aes(x = Age, y = BB9))+
+    geom_bar(stat = "identity")
+  
+  
+  #Bar Graph for Age vs HR9
+  MLB_SP_QUA_NAomit %>% 
+    ggplot(aes(x = Age, y = HR9))+
+    geom_bar(stat = "identity")
+    
+  
+  
+  #Age vs ERA plots
+  
+  #Age vs ERA Residuals vs Fitted
+  Age_VS_ERA <- lm(MLB_SP_QUA_NAomit$ERA ~ MLB_SP_QUA_NAomit$Age)
+  plot(Age_VS_ERA, which = 1)+
+  title("Age vs ERA")
+  
+  #Age vs ERA Normal Q-Q
+  Age_VS_ERA <- lm(MLB_SP_QUA_NAomit$ERA ~ MLB_SP_QUA_NAomit$Age)
+  plot(Age_VS_ERA, which = 2)+
+    title("Age vs ERA")
+  
+  #Age vs ERA Residuals vs Leverage
+  Age_VS_ERA <- lm(MLB_SP_QUA_NAomit$ERA ~ MLB_SP_QUA_NAomit$Age)
+  plot(Age_VS_ERA, which = 5)+
+    title("Age vs ERA")
+  
+  summary(Age_VS_ERA)
+  
+  
+  
+  #Age vs WHIP plots
+  
+  #Age vs WHIP Residuals vs Fitted
+  Age_VS_WHIP <- lm(MLB_SP_QUA_NAomit$WHIP ~ MLB_SP_QUA_NAomit$Age)
+  plot(Age_VS_WHIP, which = 1)+
+    title("Age vs WHIP")
+  
+  #Age vs WHIP Normal Q-Q
+  Age_VS_WHIP <- lm(MLB_SP_QUA_NAomit$WHIP ~ MLB_SP_QUA_NAomit$Age)
+  plot(Age_VS_WHIP, which = 2)+
+    title("Age vs WHIP")
+  
+  #Age vs WHIP Residuals vs Leverage
+  Age_VS_WHIP <- lm(MLB_SP_QUA_NAomit$WHIP ~ MLB_SP_QUA_NAomit$Age)
+  plot(Age_VS_WHIP, which = 5)+
+    title("Age vs WHIP")
+  
+  summary(Age_VS_WHIP)
+  
+  
+  
+  #Age vs SO9 plots
+  
+  #Age vs SO9 Residuals vs Fitted
+  Age_VS_SO9 <- lm(MLB_SP_QUA_NAomit$SO9 ~ MLB_SP_QUA_NAomit$Age)
+  plot(Age_VS_SO9, which = 1)+
+    title("Age vs SO9")
+  
+  #Age vs SO9 Normal Q-Q
+  Age_VS_SO9 <- lm(MLB_SP_QUA_NAomit$SO9 ~ MLB_SP_QUA_NAomit$Age)
+  plot(Age_VS_SO9, which = 2)+
+    title("Age vs SO9")
+  
+  #Age vs SO9 Residuals vs Leverage
+  Age_VS_SO9 <- lm(MLB_SP_QUA_NAomit$SO9 ~ MLB_SP_QUA_NAomit$Age)
+  plot(Age_VS_SO9, which = 5)+
+    title("Age vs SO9")
+  
+  summary(Age_VS_SO9)
+  
+  
+  
+  #Age vs BB9 plots
+  
+  #Age vs BB9 Residuals vs Fitted
+  Age_VS_BB9 <- lm(MLB_SP_QUA_NAomit$BB9 ~ MLB_SP_QUA_NAomit$Age)
+  plot(Age_VS_BB9, which = 1)+
+    title("Age vs BB9")
+  
+  #Age vs BB9 Normal Q-Q
+  Age_VS_BB9 <- lm(MLB_SP_QUA_NAomit$BB9 ~ MLB_SP_QUA_NAomit$Age)
+  plot(Age_VS_BB9, which = 2)+
+    title("Age vs BB9")
+  
+  #Age vs BB9 Residuals vs Leverage
+  Age_VS_BB9 <- lm(MLB_SP_QUA_NAomit$BB9 ~ MLB_SP_QUA_NAomit$Age)
+  plot(Age_VS_BB9, which = 5)+
+    title("Age vs BB9")
+  
+  summary(Age_VS_BB9)
+  
+  
+  
+  #Age vs HR9 plots
+  
+  #Age vs HR9 Residuals vs Fitted
+  Age_VS_HR9 <- lm(MLB_SP_QUA_NAomit$HR9 ~ MLB_SP_QUA_NAomit$Age)
+  plot(Age_VS_HR9, which = 1)+
+    title("Age vs HR9")
+  
+  #Age vs HR9 Normal Q-Q
+  Age_VS_HR9 <- lm(MLB_SP_QUA_NAomit$HR9 ~ MLB_SP_QUA_NAomit$Age)
+  plot(Age_VS_HR9, which = 2)+
+    title("Age vs HR9")
+  
+  #Age vs HR9 Residuals vs Leverage
+  Age_VS_HR9 <- lm(MLB_SP_QUA_NAomit$HR9 ~ MLB_SP_QUA_NAomit$Age)
+  plot(Age_VS_HR9, which = 5)+
+    title("Age vs HR9")
+  
+  summary(Age_VS_HR9)
+  
+  
+  
+  
+  
+  #Boxplot for Age vs ERA
+  MLB_SP_QUA_NAomit %>% 
+    ggplot(aes(group = Age,x = Age ,y = ERA))+
+    geom_boxplot()+
+    ggtitle("Age vs ERA boxplot")
+  
+  
+  #Boxplot for Age vs WHIP
+  MLB_SP_QUA_NAomit %>% 
+    ggplot(aes(group = Age,x = Age ,y = WHIP))+
+    geom_boxplot()+
+    ggtitle("Age vs WHIP boxplot")
+  
+  
+  #Boxplot for Age vs SO9
+  MLB_SP_QUA_NAomit %>% 
+    ggplot(aes(group = Age,x = Age ,y = SO9))+
+    geom_boxplot()+
+    ggtitle("Age vs K/9 boxplot")
+  
+  
+  #Boxplot for Age vs BB9
+  MLB_SP_QUA_NAomit %>% 
+    ggplot(aes(group = Age,x = Age ,y = BB9))+
+    geom_boxplot()+
+    ggtitle("Age vs BB/9 boxplot")
+  
+  
+  #Boxplot for Age vs HR9
+  MLB_SP_QUA_NAomit %>% 
+    ggplot(aes(group = Age,x = Age ,y = HR9))+
+    geom_boxplot()+
+    ggtitle("Age vs HR/9 boxplot")
+
+  
+#T tests    
+#t.test(MLB_SP_QUA_NAomit$Age, MLB_SP_QUA_NAomit$ERA)
+#t.test(Over_Equal_28$Age, Over_Equal_28$ERA)
+
+
+
+
+#Hypothesis Testing
+
+#t statistic
+t <- (mean(Over_Equal_28$ERA) - mean(MLB_SP_QUA_NAomit$ERA))/(sd(Over_Equal_28$ERA)/sqrt(110))
+t
+
+
+#p-value
+1-pt(t, 109)
+#Results
+#0.2813 is greater than an alpha level of 5%
+#We fail to reject the null hypothesis
+#There is insufficient evidence to suggest that Age affects ERA 
+
+confint(Age_VS_ERA_mod)
+
+
+mean(MLB_SP_QUA_NAomit$ERA)
+
+
+mean(MLB_SP_QUA_NAomit$BB9)
+mean(MLB_SP_QUA_NAomit$SO9)
