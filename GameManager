@@ -1627,7 +1627,7 @@ public class DifferentToast : MonoBehaviour
 
     public void enableMenu()
     {
-        Debug.Log("Brooklyn you coded it right, c# is a piece of shit");
+        
         menu.SetActive(true);
     }
     public void disableMenu()
