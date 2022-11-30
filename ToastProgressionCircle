@@ -1,0 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class ToastProgressionCircle : MonoBehaviour
+{
+
+    public DifferentToast diffToast;
+
+    public Image percentToNextToast;
+    public TMP_Text nextToastText;
+    [Range(0, 1)]
+    public float progress = 0;
+
+    // Update is called once per frame
+    void Update()
+    {
+        progress =((float)diffToast.selectedCurrentAdvanceToast / (float)diffToast.selectedMaxAdvanceToast);
+
+
+        percentToNextToast.fillAmount = progress;
+        if(progress < 1)
+        {
+            nextToastText.text = Mathf.RoundToInt(progress * 100) + "%";
+        }
+        else
+        {
+            nextToastText.text = "Done";
+        }
+    }
+}
