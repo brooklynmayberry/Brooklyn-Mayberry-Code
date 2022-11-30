@@ -1,0 +1,79 @@
+using UnityEngine;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+
+public static class SaveSystem
+{
+   
+
+    public static void SaveToast(DifferentToast diffToast, string FileName)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + FileName;
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        ToastData tData = new ToastData(diffToast, FileName);
+
+        formatter.Serialize(stream, tData);
+        stream.Close();
+        
+    }
+
+    public static ToastData LoadToast(string FileName)
+    {
+        
+        string path = Application.persistentDataPath + FileName;
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            ToastData tData = formatter.Deserialize(stream) as ToastData;
+            stream.Close();
+            Debug.Log(path);
+            return tData;
+        }
+        else
+        {
+            Debug.LogError("Save file not found in " + path);
+            return null;
+        }
+    }
+
+
+
+
+
+    public static void saveUniversal(DifferentToast diffToast, string FileName)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + FileName;
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        UniversalData uData = new UniversalData(diffToast);
+
+        formatter.Serialize(stream, uData);
+        stream.Close();
+    }
+
+    public static UniversalData loadUniversal(string FileName)
+    {
+        string path = Application.persistentDataPath + FileName;
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            UniversalData uData = formatter.Deserialize(stream) as UniversalData;
+            stream.Close();
+
+            return uData;
+        }
+        else
+        {
+            Debug.LogError("Save file not found in " + path);
+            return null;
+        }
+    }
+
+}

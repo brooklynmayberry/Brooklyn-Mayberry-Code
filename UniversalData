@@ -1,0 +1,136 @@
+[System.Serializable]
+public class UniversalData
+{
+    public int gToast;
+    public int gToastAddAmount;
+    public int cogToast;
+
+    
+    public int aValue;
+
+    public int sNumber;
+
+    public int cbtToast;
+    public int cttButter;
+
+
+
+    public int mbtToast;
+    public int mttButter;
+    public int mbtPb;
+    public int mpbtJelly;
+    public int mjtCinnamon;
+    public int mctBanana;
+    public int mbtEgg;
+    public int metAvocado;
+    public int matMystery;
+
+    public float stIncreaseAmount;
+    public float stPrice;
+    public float stPriceIncrease;
+
+    public float srIncreaseAmount;
+    public float srPrice;
+    public float srPriceIncrease;
+
+    public float sreIncreaseAmount;
+    public float srePrice;
+    public float srePriceIncrease;
+
+    public float dtIncreaseAmount;
+    public float dtPrice;
+    public float dtPriceIncrease;
+
+    public float drIncreaseAmount;
+    public float drPrice;
+    public float drPriceIncrease;
+
+    public float dreIncreaseAmount;
+    public float drePrice;
+    public float drePriceIncrease;
+
+    public float gtpAmount;
+    public float gtpPrice;
+    public float gtpIdle;
+
+    public float breadPrice;
+    public float toastPrice;
+    public float butterPrice;
+    public float pbPrice;
+    public float jellyPrice;
+    public float cinnamonPrice;
+    public float bananaPrice;
+    public float eggPrice;
+    public float avocadoPrice;
+    public float mysteryPrice;
+
+
+    public UniversalData(DifferentToast diffToast) 
+    {
+        gToast = diffToast.goldToast;
+        gToastAddAmount = diffToast.goldToastAddAmount;
+        cogToast = diffToast.chanceOfGoldToast;
+
+
+        
+        aValue = diffToast.assentionValue;
+
+        sNumber = diffToast.sceneNumber;
+
+        mbtToast = diffToast.maxBreadtoToast;
+        mttButter = diffToast.maxToasttoButter;
+        mbtPb = diffToast.maxButtertoPb;
+        mpbtJelly = diffToast.maxPbtoJelly;
+        mjtCinnamon = diffToast.maxJellytoCinnamon;
+        mctBanana = diffToast.maxCinnamontoBanana;
+        mbtEgg = diffToast.maxBananatoEgg;
+        metAvocado = diffToast.maxEggtoAvocado;
+        matMystery = diffToast.maxAvocadotoMystery;
+
+        cbtToast = diffToast.currentBreadtoToast;
+        cttButter = diffToast.currentToasttoButter;
+
+
+
+        stIncreaseAmount = diffToast.silverToastersIncreaseAmount;
+        stPrice = diffToast.silverToastersPrice;
+        stPriceIncrease = diffToast.silverToastersPriceIncrease;
+
+        srIncreaseAmount = diffToast.silverRecipesIncreaseAmount;
+        srPrice = diffToast.silverRecipesPrice;
+        srPriceIncrease = diffToast.silverRecipesPriceIncrease;
+
+        sreIncreaseAmount = diffToast.silverRatedEmployeesIncreaseAmount;
+        srePrice = diffToast.silverRatedEmployeesPrice;
+        srePriceIncrease = diffToast.silverRatedEmployeesPriceIncrease;
+
+        dtIncreaseAmount = diffToast.diamondToastersIncreaseAmount;
+        dtPrice = diffToast.diamondToastersPrice;
+        dtPriceIncrease = diffToast.diamondToastersPriceIncrease;
+
+        drIncreaseAmount = diffToast.diamondRecipesIncreaseAmount;
+        drPrice = diffToast.diamondRecipesPrice;
+        drPriceIncrease = diffToast.diamondRecipesPriceIncrease;
+
+        dreIncreaseAmount = diffToast.diamondRatedEmployeesIncreaseAmount;
+        drePrice = diffToast.diamondRatedEmployeesPrice;
+        drePriceIncrease = diffToast.diamondRatedEmployeesPriceIncrease;
+
+
+        gtpAmount = diffToast.goldToastPlusAmount;
+        gtpPrice = diffToast.goldToastPlusPrice;
+        gtpIdle = diffToast.goldToastPlusIdle;
+
+
+        breadPrice = diffToast.breadPrice;
+        toastPrice = diffToast.toastPrice;
+        butterPrice = diffToast.butterPrice;
+        pbPrice = diffToast.pbPrice;
+        jellyPrice = diffToast.jellyPrice;
+        cinnamonPrice = diffToast.cinnamonPrice;
+        bananaPrice = diffToast.bananaPrice;
+        eggPrice = diffToast.eggPrice;
+        avocadoPrice = diffToast.avocadoPrice;
+        mysteryPrice = diffToast.mysteryPrice;
+    }
+}

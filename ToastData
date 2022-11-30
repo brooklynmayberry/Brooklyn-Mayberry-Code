@@ -1,0 +1,251 @@
+
+[System.Serializable]
+public class ToastData
+{
+
+    public float tPlusAmount;
+
+
+
+
+    public float money;
+    public float price;
+    public float amount;
+    public float tSlices;
+
+    //Idle variables
+    public float iwTime;
+    public float itPlusAmount;
+
+
+    //More Toasters Upgrade
+    public float mtPrice;
+    public float mtPriceIncrease;
+    public float mtIncreaseAmount;
+
+    //Higher Quality Loaves Upgrade;
+    public float qlPrice;
+    public float qlPriceIncrease;
+    public float qlIncreaseAmount;
+
+    //Hire Employees Upgrade
+    public float hePrice;
+    public float hePriceIncrease;
+    public float heIncreaseAmount;
+
+    //Train Employee Upgrade
+    public float tePrice;
+    public float tePriceIncrease;
+    public float teDecreaseAmount;
+
+    //Sponsorship Upgrade
+    public float spIncreaseAmount;
+    public float spPrice;
+    public float spPriceIncrease;
+
+    //Two For One Toasters Upgrade
+    public float tfotIncreaseAmount;
+    public float tfotPrice;
+    public float tfotPriceIncrease;
+
+    //Newspaper Ads Upgrade
+    public float naIncreaseAmount;
+    public float naPrice;
+    public float naPriceIncrease;
+
+    //Extra Shifts Upgrade
+    public float esIncreaseAmount;
+    public float esPrice;
+    public float esPriceIncrease;
+
+    //Bigger Loaves Upgrade
+    public float blToastIncreaseAmount;
+    public float blIdleIncreaseAmount;
+    public float blPrice;
+    public float blPriceIncrease;
+
+    //Three for One Toasters Upgrade
+    public float tfoIncreaseAmount;
+    public float tfoPrice;
+    public float tfoPriceIncrease;
+
+    //Four for One Toasters Upgrade;
+    public float ffotIncreaseAmount;
+    public float ffotPrice;
+    public float ffotPriceIncrease;
+
+    //Research Upgrade
+    public float rIncreaseAmount;
+    public float rPrice;
+    public float rPriceIncrease;
+
+    //Local Farms Upgrade
+    public float lfSellIncreaseAmount;
+    public float lfWaitIncreaseAmount;
+    public float lfPrice;
+    public float lfPriceIncrease;
+
+    //Faster Production Upgrade
+    public float fpSellDecreaseAmount;
+    public float fpWaitDecreaseAmount;
+    public float fpPrice;
+    public float fpPriceIncrease;
+
+    //Borrow Ingredients Upgrade
+    public float biToastIncreaseAmount;
+    public float biNextIncreaseAmount;
+    public float biPrice;
+    public float biPriceIncrease;
+
+    //Loan Upgrade
+    public float lSellIncreaseAmount;
+    public float lNextIncreaseAmount;
+    public float lPrice;
+    public float lPriceIncrease;
+
+    //Bools
+    public bool bActive;
+    public bool icActive;
+    public bool dActive;
+
+    //Delivery Timer
+    public float dTimer;
+    public float dTimerMax;
+
+    //Delivery
+    public float mLoaves;
+    public float sPerLoaf;
+
+    //Refill Storage
+    public float pPerLoaf;
+
+
+    //Increase Max Loaves
+    public float mlIncreaseAmount;
+    public float mlPrice;
+    public float mlPriceIncrease;
+
+
+    public ToastData(DifferentToast diffToast, string FileName)
+    {
+
+
+        
+        tPlusAmount = diffToast.toastPlusAmount;
+
+        money = diffToast.Money;
+        price = diffToast.Price;
+        amount = diffToast.ToastAmount;
+        tSlices = diffToast.totalSlices;
+
+        //Idle
+        iwTime = diffToast.idleWaitTime;
+        itPlusAmount = diffToast.idleToastPlusAmount;
+
+
+        //More Toasters Upgrade
+        mtPrice = diffToast.moreToastersPrice;
+        mtPriceIncrease = diffToast.moreToastersPriceIncrease;
+        mtIncreaseAmount = diffToast.moreToastersIncreaseAmount;
+
+
+        //Higher Quality Loaves Upgrade
+        qlPrice = diffToast.qualityLoavesPrice;
+        qlPriceIncrease = diffToast.qualityLoavesPriceIncrease;
+        qlIncreaseAmount = diffToast.qualityLoavesIncreaseAmount;
+
+
+        //Hire Employees Upgrade
+        hePrice = diffToast.hireEmployeePrice;
+        hePriceIncrease = diffToast.hireEmployeePriceIncrease;
+        heIncreaseAmount = diffToast.hireEmployeeIncreaseAmount;
+
+        //Train Employee Upgrade
+        tePrice = diffToast.trainEmployeePrice;
+        tePriceIncrease = diffToast.trainEmployeePriceIncrease;
+        teDecreaseAmount = diffToast.trainEmployeeDecreaseAmount;
+
+        //Sponsorship Upgrade
+        spIncreaseAmount = diffToast.sponsorshipIncreaseAmount;
+        spPrice = diffToast.sponsorshipPrice;
+        spPriceIncrease = diffToast.sponsorshipPriceIncrease;
+
+
+        //Two For One Toasters Upgrade
+        tfotIncreaseAmount = diffToast.twoForOneToastersIncreaseAmount;
+        tfotPrice = diffToast.twoForOneToastersPrice;
+        tfotPriceIncrease = diffToast.twoForOneToastersPriceIncrease;
+
+        //Newspaper Ads Upgrade
+        naIncreaseAmount = diffToast.newspaperAdsIncreaseAmount;
+        naPrice = diffToast.newspaperAdsPrice;
+        naPriceIncrease = diffToast.newspaperAdsPriceIncrease;
+
+        //Extra Shifts Upgrade
+        esIncreaseAmount = diffToast.extraShiftsIncreaseAmount;
+        esPrice = diffToast.extraShiftsPrice;
+        esPriceIncrease = diffToast.extraShiftsPriceIncrease;
+
+
+
+        //Three for One Toasters Upgrade
+        tfoIncreaseAmount = diffToast.threeForOneIncreaseAmount;
+        tfoPrice = diffToast.threeForOnePrice;
+        tfoPriceIncrease = diffToast.threeForOnePriceIncrease;
+
+        //Four for One Toasters Upgrade
+        ffotIncreaseAmount = diffToast.fourForOneIncreaseAmount;
+        ffotPrice = diffToast.fourForOnePrice;
+        ffotPriceIncrease = diffToast.fourForOnePriceIncrease;
+
+        //BiggerLoaves Upgrade
+        blToastIncreaseAmount = diffToast.biggerLoavesToastIncreaseAmount;
+        blIdleIncreaseAmount = diffToast.biggerLoavesIdleIncreaseAmount;
+        blPrice = diffToast.biggerLoavesPrice;
+        blPriceIncrease = diffToast.biggerLoavesPriceIncrease;
+
+
+
+        //Research Upgrade
+        rIncreaseAmount = diffToast.researchIncreaseAmount;
+        rPrice = diffToast.researchPrice;
+        rPriceIncrease = diffToast.researchPriceIncrease;
+
+        //Local Farms Upgrade
+        lfSellIncreaseAmount = diffToast.localFarmsSellIncreaseAmount;
+        lfWaitIncreaseAmount = diffToast.localFarmsWaitIncreaseAmount;
+        lfPrice = diffToast.localFarmsPrice;
+        lfPriceIncrease = diffToast.localFarmsPriceIncrease;
+
+        //Faster Production Upgrade
+        fpSellDecreaseAmount = diffToast.fasterProductionSellDecreaseAmount;
+        fpWaitDecreaseAmount = diffToast.fasterProductionWaitDecreaseAmount;
+        fpPrice = diffToast.fasterProductionPrice;
+        fpPriceIncrease = diffToast.fasterProductionPriceIncrease;
+
+        //Borrow Ingredients Upgrade
+        biToastIncreaseAmount = diffToast.borrowIngredientsToastIncreaseAmount;
+        biNextIncreaseAmount = diffToast.borrowIngredientsNextIncreaseAmount;
+        biPrice = diffToast.borrowIngredientsPrice;
+        biPriceIncrease = diffToast.borrowIngredientsPriceIncrease;
+
+        //Loan Upgrade
+        lSellIncreaseAmount = diffToast.loanSellIncreaseAmount;
+        lNextIncreaseAmount = diffToast.loanNextIncreaseAmount;
+        lPrice = diffToast.loanPrice;
+        lPriceIncrease = diffToast.loanPriceIncrease;
+
+        //Bools
+        bActive = diffToast.buttonActive;
+        icActive = diffToast.idleClickActive;
+
+
+
+        //Delivery
+        mLoaves = diffToast.maxLoaves;
+        sPerLoaf = diffToast.slicesPerLoaf;
+
+
+        
+    }
+}
