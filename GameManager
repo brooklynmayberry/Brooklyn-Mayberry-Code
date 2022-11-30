@@ -1,0 +1,2117 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SceneManagement;
+
+public class DifferentToast : MonoBehaviour
+{
+    public ToastData tData;
+
+    public int sceneNumber = 0;
+    public int tempSceneNumber;
+
+    public string sceneFile;
+    //toast count text
+    public TMP_Text toastCount;
+    //money count text
+    public TMP_Text moneyCount;
+    public TMP_Text upgradeMoneyCount;
+    public TMP_Text totalSlicesText;
+
+
+    #region SaveFiles
+    //Toast Save Files
+    private string breadFile = "/testfile10.yes";
+    private string toastedToastFile = "/toastedTest21.yes";
+    private string pbFile = "/pbToastTest1.yes";
+    private string jellyFile = "/jellyToastTest1.yes";
+    private string butterFile = "/butterToastTest1.yes";
+    private string cinnamonFile = "/cinnamonToastTest1.yes";
+    private string avocadoFile = "/avacadoToastTest1.yes";
+    private string eggFile = "/eggToastTest1.yes";
+    private string bananaFile = "/bananaToastTest1.yes";
+    private string mysteryFile = "mysteryToastTest1.yes";
+    private string universalFile = "universaltest5.yes";
+    #endregion
+
+    #region Text Objects
+
+    [Header("Upgrade Costs Text")]
+    //Upgrade cost texts
+    public TMP_Text moreToastersCost;
+    public TMP_Text healthierRecipesCost;
+    public TMP_Text hireEmployeesCost;
+    public TMP_Text trainEmployeesCost;
+    public TMP_Text biggerWarehouseCost;
+    public TMP_Text twoForOneToastersCost;
+    public TMP_Text newspaperAdsCost;
+    public TMP_Text extraSiftsCost;
+    public TMP_Text biggerLoavesCost;
+    public TMP_Text threeForOneToastersCost;
+    public TMP_Text fourForOneToastersCost;
+    public TMP_Text sponsorshipCost;
+    public TMP_Text researchCost;
+    public TMP_Text localFarmsCost;
+    public TMP_Text fasterProductionCost;
+    public TMP_Text borrowIngredientsCost;
+    public TMP_Text loanCost;
+    public TMP_Text silverToastersCost;
+    public TMP_Text silverRecipesCost;
+    public TMP_Text silverRatedEmployeesCost;
+    public TMP_Text diamondToastersCost;
+    public TMP_Text diamondRecipesCost;
+    public TMP_Text diamondRatedEmployeesCost;
+
+    //The sell price text
+    public TMP_Text sellPriceText;
+
+
+    [Header("Upgrade Descriptions")]
+    //Upgrade text descriptions
+    public TMP_Text moreToastersD;
+    public TMP_Text HealthierRecipesD;
+    public TMP_Text HireEmployeesD;
+    public TMP_Text TrainEmployeesD;
+    public TMP_Text BiggerWarehouseD;
+    public TMP_Text twoForOneToastersD;
+    public TMP_Text newspaperAdsD;
+    public TMP_Text extraShiftsD;
+    public TMP_Text biggerLoavesD;
+    public TMP_Text threeForOneToastersD;
+    public TMP_Text fourForOneToastersD;
+    public TMP_Text sponsorshipD;
+    public TMP_Text researchD;
+    public TMP_Text localFarmsD;
+    public TMP_Text fasterProductionD;
+    public TMP_Text borrowIngredientsD;
+    public TMP_Text loanD;
+    public TMP_Text silverToastersD;
+    public TMP_Text silverRecipesD;
+    public TMP_Text silverRatedEmployeesD;
+    public TMP_Text diamondToastersD;
+    public TMP_Text diamondRecipesD;
+    public TMP_Text diamondRatedEmployeesD;
+
+    #endregion
+
+    public float toastPlusAmount;
+    public float increaseClickAmount;
+
+    //private float toastPerSecond = 1;
+
+    //Golden toast variables
+    public int goldToast;
+    public int goldToastAddAmount;
+    [Tooltip("The math is int/1000 to get a percentage")]
+    public int chanceOfGoldToast;
+
+    public TMP_Text goldToastAmount;
+    public TMP_Text upgradeGoldToastAmount;
+
+    public float Money;
+    public float Price;
+    public float ToastAmount;
+    public float totalSlices;
+    public bool buttonActive = true;
+
+
+    [Header("Idle Clicking")]
+    public bool idleClickActive = true;
+    public float idleWaitTime;
+    public float timeRemaining;
+    public float idleToastPlusAmount;
+
+    [Header("Assention")]
+    //Current assention value is the multiplier applied to each value at this current moment
+    //next assention value is how much the multiplier will be when you assend next. 
+    public int assentionValue;
+
+
+    #region Upgrades
+    [Header("More Toasters")]
+    // More Toasters Upgrade
+    public float moreToastersIncreaseAmount;
+    public float moreToastersPrice;
+    public float moreToastersPriceIncrease;
+
+    [Header("Higher Quality Loaves")]
+    // Higher quality loaves
+    public float qualityLoavesIncreaseAmount;
+    public float qualityLoavesPrice;
+    public float qualityLoavesPriceIncrease;
+
+    [Header("Hire Employees Upgrade")]
+    //Hire Employees
+    public float hireEmployeeIncreaseAmount;
+    public float hireEmployeePrice;
+    public float hireEmployeePriceIncrease;
+
+    [Header("Train Employees Upgrade")]
+    //Train Employees Upgrade
+    public float trainEmployeeDecreaseAmount;
+    public float trainEmployeePrice;
+    public float trainEmployeePriceIncrease;
+    public float minimumIdleWaitTime = 0.2f;
+
+    [Header("Sponsorship Upgrade")]
+    //Sponsorship Upgrade
+    public float sponsorshipIncreaseAmount;
+    public float sponsorshipPrice;
+    public float sponsorshipPriceIncrease;
+
+
+    [Header("Two for One Toasters")]
+    //Two for One Toasters Upgrade
+    public float twoForOneToastersIncreaseAmount;
+    public float twoForOneToastersPrice;
+    public float twoForOneToastersPriceIncrease;
+
+    [Header("Newspaper Ads")]
+    //Newspaper Ads Upgrade
+    public float newspaperAdsIncreaseAmount;
+    public float newspaperAdsPrice;
+    public float newspaperAdsPriceIncrease;
+
+    [Header("Extra Shifts")]
+    //Extra Shifts Upgrade
+    public float extraShiftsIncreaseAmount;
+    public float extraShiftsPrice;
+    public float extraShiftsPriceIncrease;
+
+    [Header("Three for One Toasters")]
+    //Three for One Toasters Upgrade
+    public float threeForOneIncreaseAmount;
+    public float threeForOnePrice;
+    public float threeForOnePriceIncrease;
+
+    [Header("Four for One Toasters")]
+    //Four for One Toasters Upgrade
+    public float fourForOneIncreaseAmount;
+    public float fourForOnePrice;
+    public float fourForOnePriceIncrease;
+
+    [Header("Bigger Loaves")]
+    public float biggerLoavesToastIncreaseAmount;
+    public float biggerLoavesIdleIncreaseAmount;
+    public float biggerLoavesPrice;
+    public float biggerLoavesPriceIncrease;
+
+    [Header("Research")]
+    public float researchIncreaseAmount;
+    public float researchPrice;
+    public float researchPriceIncrease;
+
+    [Header("Local Farms")]
+    public float localFarmsSellIncreaseAmount;
+    public float localFarmsWaitIncreaseAmount;
+    public float localFarmsPrice;
+    public float localFarmsPriceIncrease;
+
+    [Header("Faster Production")]
+    public float fasterProductionSellDecreaseAmount;
+    public float fasterProductionWaitDecreaseAmount;
+    public float fasterProductionPrice;
+    public float fasterProductionPriceIncrease;
+
+    [Header("Borrow Ingredients")]
+    public float borrowIngredientsToastIncreaseAmount;
+    public float borrowIngredientsNextIncreaseAmount;
+    public float borrowIngredientsPrice;
+    public float borrowIngredientsPriceIncrease;
+
+    [Header("Loan")]
+    public float loanSellIncreaseAmount;
+    public float loanNextIncreaseAmount;
+    public float loanPrice;
+    public float loanPriceIncrease;
+
+
+    [Header("Delivery")]
+    public float maxLoaves;
+    public float slicesPerLoaf;
+    #endregion
+
+    [Header("Toast Sprite for Conveyer Belt")]
+    public GameObject toastSprite;
+    public GameObject goldToastSprite;
+    public GameObject Canvas;
+
+    [Header("Menu")]
+    public GameObject menu; 
+
+    [Header("ads")]
+    public RewardedAdsButton rewardedAdsButton;
+
+    [Header("Advance Toasts")]
+    public int maxBreadtoToast;
+    public int currentBreadtoToast;
+
+    public int maxToasttoButter;
+    public int currentToasttoButter;
+
+    public int maxButtertoPb;
+    public int currentButtertoPb;
+
+    public int maxPbtoJelly;
+    public int currentPbtoJelly;
+
+    public int maxJellytoCinnamon;
+    public int currentJellytoCinnamon;
+
+    public int maxCinnamontoBanana;
+    public int currentCinnamontoBanana;
+
+    public int maxBananatoEgg;
+    public int currentBananatoEgg;
+
+    public int maxEggtoAvocado;
+    public int currentEggtoAvocado;
+
+    public int maxAvocadotoMystery;
+    public int currentAvocadotoMystery;
+
+
+    public int selectedCurrentAdvanceToast;
+    public int selectedMaxAdvanceToast;
+
+
+    #region Gold Toast Upgrades
+    [Header("Silver Toasters")]
+    public float silverToastersIncreaseAmount;
+    public float silverToastersPrice;
+    public float silverToastersPriceIncrease;
+
+    [Header("Silver Recipes")]
+    public float silverRecipesIncreaseAmount;
+    public float silverRecipesPrice;
+    public float silverRecipesPriceIncrease;
+
+    [Header("Silver Rated Employees")]
+    public float silverRatedEmployeesIncreaseAmount;
+    public float silverRatedEmployeesPrice;
+    public float silverRatedEmployeesPriceIncrease;
+
+    [Header("Diamond Toasters")]
+    public float diamondToastersIncreaseAmount;
+    public float diamondToastersPrice;
+    public float diamondToastersPriceIncrease;
+
+    [Header("Diamond Recipes")]
+    public float diamondRecipesIncreaseAmount;
+    public float diamondRecipesPrice;
+    public float diamondRecipesPriceIncrease;
+
+    [Header("Diamond Rated Employees")]
+    public float diamondRatedEmployeesIncreaseAmount;
+    public float diamondRatedEmployeesPrice;
+    public float diamondRatedEmployeesPriceIncrease;
+
+    [Header("Gold Toast Upgrade Value Changers")]
+    public float goldToastPlusAmount;
+    public float goldToastPlusPrice;
+    public float goldToastPlusIdle;
+    #endregion
+
+    [Header("Default Prices")]
+    public float breadPrice = 0.25f;
+    public float toastPrice = 0.5f;
+    public float butterPrice = 1;
+    public float pbPrice = 1.75f;
+    public float jellyPrice = 2.75f;
+    public float cinnamonPrice = 4;
+    public float bananaPrice = 5.5f;
+    public float eggPrice = 7.25f;
+    public float avocadoPrice = 9.25f;
+    public float mysteryPrice = 15;
+
+
+
+    private void Awake()
+    {
+        Application.targetFrameRate = 60;
+
+        
+
+        switch (sceneNumber)
+        {
+            case 0:
+                loadUniversalData();
+                currentBreadtoToast = (int)totalSlices;
+                selectedMaxAdvanceToast = maxBreadtoToast;
+                changeFile();
+                loadToastData(sceneFile);
+                break;
+            case 1:
+                loadUniversalData();
+                currentToasttoButter = (int)totalSlices;
+                selectedMaxAdvanceToast = maxToasttoButter;
+                changeFile();
+                loadToastData(sceneFile);
+                break;
+            case 2:
+                loadUniversalData();
+                currentButtertoPb = (int)totalSlices;
+                selectedMaxAdvanceToast = maxButtertoPb;
+                changeFile();
+                loadToastData(sceneFile);
+                break;
+            case 3:
+                loadUniversalData();
+                currentPbtoJelly = (int)totalSlices;
+                selectedMaxAdvanceToast = maxPbtoJelly;
+                changeFile();
+                loadToastData(sceneFile);
+                break;
+            case 4:
+                loadUniversalData();
+                currentJellytoCinnamon = (int)totalSlices;
+                selectedMaxAdvanceToast = maxJellytoCinnamon;
+                changeFile();
+                loadToastData(sceneFile);
+                break;
+            case 5:
+                loadUniversalData();
+                currentCinnamontoBanana = (int)totalSlices;
+                selectedMaxAdvanceToast = maxCinnamontoBanana;
+                changeFile();
+                loadToastData(sceneFile);
+                break;
+            case 6:
+                loadUniversalData();
+                currentBananatoEgg = (int)totalSlices;
+                selectedMaxAdvanceToast = maxBananatoEgg;
+                changeFile();
+                loadToastData(sceneFile);
+                break;
+            case 7:
+                loadUniversalData();
+                currentEggtoAvocado = (int)totalSlices;
+                selectedMaxAdvanceToast = maxEggtoAvocado;
+                changeFile();
+                loadToastData(sceneFile);
+                break;
+            case 8:
+                loadUniversalData();
+                currentAvocadotoMystery = (int)totalSlices;
+                selectedMaxAdvanceToast = maxAvocadotoMystery;
+                changeFile();
+                loadToastData(sceneFile);
+                break;
+            case 9:
+                loadUniversalData();
+                changeFile();
+                loadToastData(sceneFile);
+                break;
+
+
+                
+        }
+
+
+        
+        
+        //idleClickActive = true;
+        //deliveryActive = true;
+
+        selectedCurrentAdvanceToast = (int)ToastAmount;
+        sellPriceText.text = "$" + (Price).ToString("F2");
+    }
+
+
+    private void OnApplicationQuit()
+    {
+        SaveUniversalData();
+        SaveToastData();
+    }
+
+
+    public void Update()
+    {
+
+        //This detects the scene number!
+        switch (sceneNumber)
+        {
+            case 0:
+                sceneFile = breadFile;
+                currentBreadtoToast = (int)totalSlices;
+                selectedMaxAdvanceToast = maxBreadtoToast;
+                break;
+            case 1:
+                sceneFile = toastedToastFile;
+                currentToasttoButter = (int)totalSlices;
+                selectedMaxAdvanceToast = maxToasttoButter;
+                break;
+            case 2:
+                sceneFile = butterFile;
+                currentButtertoPb = (int)totalSlices;
+                selectedMaxAdvanceToast = maxButtertoPb;
+                break;
+            case 3:
+                sceneFile = pbFile;
+                currentPbtoJelly = (int)totalSlices;
+                selectedMaxAdvanceToast = maxPbtoJelly;
+                break;
+            case 4:
+                sceneFile = jellyFile;
+                currentJellytoCinnamon = (int)totalSlices;
+                selectedMaxAdvanceToast = maxJellytoCinnamon;
+                break;
+            case 5:
+                sceneFile = cinnamonFile;
+                currentCinnamontoBanana = (int)totalSlices;
+                selectedMaxAdvanceToast = maxCinnamontoBanana;
+                break;
+            case 6:
+                sceneFile = bananaFile;
+                currentBananatoEgg = (int)totalSlices;
+                selectedMaxAdvanceToast = maxBananatoEgg;
+                break;
+            case 7:
+                sceneFile = eggFile;
+                currentEggtoAvocado = (int)totalSlices;
+                selectedMaxAdvanceToast = maxEggtoAvocado;
+                break;
+            case 8:
+                sceneFile = avocadoFile;
+                currentAvocadotoMystery = (int)totalSlices;
+                selectedMaxAdvanceToast = maxAvocadotoMystery;
+                break;
+            case 9:
+                sceneFile = mysteryFile;
+                break;
+
+        }
+                selectedCurrentAdvanceToast = (int)totalSlices;
+
+
+        //Displays the amount of money the player has, how much each piece of toast sells for and the amount of toast the player has.
+        moneyCount.text = "$" + Money.ToString("F2");
+        upgradeMoneyCount.text = "$" + Money.ToString("F2");
+        
+        toastCount.text = ToastAmount.ToString("F0");
+        totalSlicesText.text = totalSlices.ToString("F0");
+
+        //Determines if the idle clicker feature is active
+        if(idleToastPlusAmount > 0)
+        {
+            Employee();
+        }
+
+        //Displays the amount of gold toast that the player has
+        goldToastAmount.text = goldToast.ToString();
+        upgradeGoldToastAmount.text = goldToast.ToString();
+
+        
+
+
+        //Upgrade cost texts
+
+        //More toasters upgrade text tree
+        if (moreToastersPrice > 999999999f)
+        {
+            moreToastersCost.text = "$" + (moreToastersPrice / 1000000000).ToString("F2") + "B";
+        }
+        else if(moreToastersPrice > 999999f)
+        {
+            moreToastersCost.text = "$" + (moreToastersPrice / 1000000).ToString("F2") + "M";
+        }else if(moreToastersPrice > 999f)
+        {
+            moreToastersCost.text = "$" + (moreToastersPrice / 1000).ToString("F2") + "K";
+        }
+        else
+        {
+            moreToastersCost.text = "$" + moreToastersPrice.ToString("F2");
+        }
+
+
+        //healthier recipes upgrade text tree
+        if (qualityLoavesPrice > 999999999f)
+        {
+            healthierRecipesCost.text = "$" + (qualityLoavesPrice / 1000000000).ToString("F2") + "B";
+        }
+        else if (qualityLoavesPrice > 999999f)
+        {
+            healthierRecipesCost.text = "$" + (qualityLoavesPrice / 1000000).ToString("F2") + "M";
+        }
+        else if (qualityLoavesPrice > 999f)
+        {
+            healthierRecipesCost.text = "$" + (qualityLoavesPrice / 1000).ToString("F2") + "K";
+        }
+        else
+        {
+            healthierRecipesCost.text = "$" + qualityLoavesPrice.ToString("F2");
+        }
+
+
+        //hire employees upgrade text tree
+        if (hireEmployeePrice > 999999999f)
+        {
+            hireEmployeesCost.text = "$" + (hireEmployeePrice / 1000000000).ToString("F2") + "B";
+        }
+        else if (hireEmployeePrice > 999999f)
+        {
+            hireEmployeesCost.text = "$" + (hireEmployeePrice / 1000000).ToString("F2") + "M";
+        }
+        else if (hireEmployeePrice > 999f)
+        {
+            hireEmployeesCost.text = "$" + (hireEmployeePrice / 1000).ToString("F2") + "K";
+        }
+        else
+        {
+            hireEmployeesCost.text = "$" + hireEmployeePrice.ToString("F2");
+        }
+
+
+        //train employees upgrade text tree
+        if (trainEmployeePrice > 999999999f)
+        {
+            trainEmployeesCost.text = "$" + (trainEmployeePrice / 1000000000).ToString("F2") + "B";
+        }
+        else if (trainEmployeePrice > 999999f)
+        {
+            trainEmployeesCost.text = "$" + (trainEmployeePrice / 1000000).ToString("F2") + "M";
+        }
+        else if (trainEmployeePrice > 999f)
+        {
+            trainEmployeesCost.text = "$" + (trainEmployeePrice / 1000).ToString("F2") + "K";
+        }
+        else
+        {
+            trainEmployeesCost.text = "$" + trainEmployeePrice.ToString("F2");
+        }
+
+
+        
+        twoForOneToastersCost.text = "$" + twoForOneToastersPrice.ToString("F2");
+        newspaperAdsCost.text = "$" + newspaperAdsPrice.ToString("F2");
+        extraSiftsCost.text = "$" + extraShiftsPrice.ToString("F2");
+        
+        threeForOneToastersCost.text = "$" + threeForOnePrice.ToString("F2");
+        fourForOneToastersCost.text = "$" + fourForOnePrice.ToString("F2");
+        sponsorshipCost.text = "$" + sponsorshipPrice.ToString("F2");
+        biggerLoavesCost.text = "$" + biggerLoavesPrice.ToString("F2");
+        researchCost.text = "$" + researchPrice.ToString("F2");
+        localFarmsCost.text = "$" + localFarmsPrice.ToString("F2");
+        fasterProductionCost.text = "$" + fasterProductionPrice.ToString("F2");
+        borrowIngredientsCost.text = "$" + borrowIngredientsPrice.ToString("F2");
+        loanCost.text = "$" + loanPrice.ToString("F2");
+
+        silverToastersCost.text = silverToastersPrice.ToString("F0");
+        silverRecipesCost.text = silverRecipesPrice.ToString("F0");
+        silverRatedEmployeesCost.text = silverRatedEmployeesPrice.ToString("F0");
+
+        diamondToastersCost.text = diamondToastersPrice.ToString("F0");
+        diamondRecipesCost.text = diamondRecipesPrice.ToString("F0");
+        diamondRatedEmployeesCost.text = diamondRatedEmployeesPrice.ToString("F0");
+
+
+
+        //Upgrade description texts
+        moreToastersD.text = "Increase toast per click +" + moreToastersIncreaseAmount;
+        HealthierRecipesD.text = "Increase sell price by " + qualityLoavesIncreaseAmount + "%";
+        HireEmployeesD.text = "+" + hireEmployeeIncreaseAmount + " employee to make toast automatically";
+        TrainEmployeesD.text = "Increases efficiency of employees by " + trainEmployeeDecreaseAmount + "%";
+        
+        twoForOneToastersD.text = "Increase toast per click +" + twoForOneToastersIncreaseAmount;
+        newspaperAdsD.text = "Increase sell price by " + newspaperAdsIncreaseAmount + "%";
+        extraShiftsD.text = "Employees take extra shifts increasing the idle click amount by " + extraShiftsIncreaseAmount;
+
+        threeForOneToastersD.text = "Increase toast per click +" + threeForOneIncreaseAmount;
+        fourForOneToastersD.text = "Increase toast per click +" + fourForOneIncreaseAmount;
+        sponsorshipD.text = "Decreases amount of toast needed for progression to next level by " + sponsorshipIncreaseAmount + "%";
+        biggerLoavesD.text = "Increases toast per click +" + biggerLoavesToastIncreaseAmount + "\n+" + biggerLoavesIdleIncreaseAmount + " employees to make toast automatically";
+        researchD.text = "Decreases amount of toast needed for progression to next level by " + researchIncreaseAmount + "%";
+        localFarmsD.text = "Increase sell price by " + localFarmsSellIncreaseAmount + "%\nDecreases efficiency of employees by " + localFarmsWaitIncreaseAmount + "%";
+        fasterProductionD.text = "Decrease sell price by " + fasterProductionSellDecreaseAmount + "%\nIncreases efficiency of employees by " + fasterProductionWaitDecreaseAmount + "%";
+        borrowIngredientsD.text = "Increases amount of toast needed for progression to next level by " + borrowIngredientsNextIncreaseAmount + "%\nIncrease toast per click by " + borrowIngredientsToastIncreaseAmount;
+        loanD.text = "Increases amount of toast needed for progression to next level by " + loanNextIncreaseAmount + "%\nIncrease sell price by " + loanSellIncreaseAmount + "%";
+
+
+        silverToastersD.text = "Increases toast per click +" + silverToastersIncreaseAmount + "\nThis upgrade is applied to every piece of toast";
+        silverRecipesD.text = "Increases the sell price by $" + silverRecipesIncreaseAmount + "\nThis upgrade is applied to every piece of toast";
+        silverRatedEmployeesD.text = "+" + silverRatedEmployeesIncreaseAmount + " employees to make toast automatically\nThis upgrade is applied to every piece of toast ";
+
+        diamondToastersD.text = "Increases toast per click +" + diamondToastersIncreaseAmount + "\nThis upgrade is applied to every piece of toast";
+        diamondRecipesD.text = "Increases the sell price by $" + diamondRecipesIncreaseAmount + "\nThis upgrade is applied to every piece of toast";
+        diamondRatedEmployeesD.text = "+" + diamondRatedEmployeesIncreaseAmount + " employees to make toast automatically\nThis upgrade is applied to every piece of toast";
+
+
+
+
+
+    }
+
+
+
+    public void addToast()
+    {
+        //gets a random number between 0 and 1000
+        int randomNum = Random.Range(0, 1001);
+        /*
+        Debug.Log(randomNum);
+        Used this to test if Random.Range(0,1001); worked and it did.
+        */
+
+        //if the random number is less than or equal to the chance of getting gold toast it adds a piece of gold toast
+        //otherwuse it runs through and adds a normal piece of toast
+        if(randomNum <= chanceOfGoldToast)
+        {
+            toastObjectConveyer(goldToastSprite);
+            goldToast += goldToastAddAmount;
+            totalSlices += goldToastAddAmount;
+        }
+        else
+        {
+            toastObjectConveyer(toastSprite);
+            ToastAmount += toastPlusAmount + goldToastPlusAmount;
+            totalSlices += toastPlusAmount + goldToastPlusAmount;
+        }
+
+    }
+
+    //Sell toast checks to see if the amount of toast is greater than or equal to 1
+    //It then takes the money and adds the (amount of toast * price of each piece)
+    //Then it resets the amount of toast back to 0
+    public void SellToast()
+    {
+        if (ToastAmount >= 1)
+        {
+            Money += ToastAmount * (Price + goldToastPlusPrice);
+            ToastAmount = 0;
+        }
+    }
+
+    #region Save and Load
+    //Saves all the variables that need to be saved
+    public void SaveToastData()
+    {
+
+        SaveSystem.SaveToast(this, sceneFile);
+    }
+
+    public void SaveUniversalData()
+    {
+        SaveSystem.saveUniversal(this, universalFile);
+    }
+    //This loads all the toast from the save file
+    //Sets the variables in this script equal to the variables from ToastData
+    public void loadToastData(string File)
+    {
+
+        ToastData tData = SaveSystem.LoadToast(File);
+        if (tData != null)
+        {
+
+            
+
+            toastPlusAmount = tData.tPlusAmount;
+
+            Money = tData.money;
+            Price = tData.price;
+            ToastAmount = tData.amount;
+            totalSlices = tData.tSlices;
+
+            //Idle
+            idleWaitTime = tData.iwTime;
+            idleToastPlusAmount = tData.itPlusAmount;
+
+
+            //More Toasters Upgrade
+            moreToastersIncreaseAmount = tData.mtIncreaseAmount;
+            moreToastersPrice = tData.mtPrice;
+            moreToastersPriceIncrease = tData.mtPriceIncrease;
+
+            //Higher Quality Loaves Upgrade
+
+            qualityLoavesPrice = tData.qlPrice;
+            qualityLoavesPriceIncrease = tData.qlPriceIncrease;
+            qualityLoavesIncreaseAmount = tData.qlIncreaseAmount;
+
+
+            //Hire Employees Upgrade
+
+            hireEmployeeIncreaseAmount = tData.heIncreaseAmount;
+            hireEmployeePrice = tData.hePrice;
+            hireEmployeePriceIncrease = tData.hePriceIncrease;
+
+            //Train Employee Upgrade
+
+            trainEmployeeDecreaseAmount = tData.teDecreaseAmount;
+            trainEmployeePrice = tData.tePrice;
+            trainEmployeePriceIncrease = tData.tePriceIncrease;
+
+
+            //Sponsorship Upgrade
+
+            sponsorshipIncreaseAmount = tData.spIncreaseAmount;
+            sponsorshipPrice = tData.spPrice;
+            sponsorshipPriceIncrease = tData.spPriceIncrease;
+
+
+            //Two for One Toasters Upgrade
+            twoForOneToastersIncreaseAmount = tData.tfotIncreaseAmount;
+            twoForOneToastersPrice = tData.tfotPrice;
+            twoForOneToastersPriceIncrease = tData.tfotPriceIncrease;
+
+            //Newspaper Ads Upgrade
+            newspaperAdsIncreaseAmount = tData.naIncreaseAmount;
+            newspaperAdsPrice = tData.naPrice;
+            newspaperAdsPriceIncrease = tData.naPriceIncrease;
+
+            //Extra Shifts Upgrade
+            extraShiftsIncreaseAmount = tData.esIncreaseAmount;
+            extraShiftsPrice = tData.esPrice;
+            extraShiftsPriceIncrease = tData.esPriceIncrease;
+
+            threeForOneIncreaseAmount = tData.tfoIncreaseAmount;
+            threeForOnePrice = tData.tfoPrice;
+            threeForOnePriceIncrease = tData.tfoPriceIncrease;
+
+            //Four for One Toasters Upgrade
+            fourForOneIncreaseAmount = tData.ffotIncreaseAmount;
+            fourForOnePrice = tData.ffotPrice;
+            fourForOnePriceIncrease = tData.ffotPriceIncrease;
+
+
+            //Bigger Loaves Upgrade
+            biggerLoavesToastIncreaseAmount = tData.blToastIncreaseAmount;
+            biggerLoavesIdleIncreaseAmount = tData.blIdleIncreaseAmount;
+            biggerLoavesPrice = tData.blPrice;
+            biggerLoavesPriceIncrease = tData.blPriceIncrease;
+
+
+            //Research Upgrade
+            researchIncreaseAmount = tData.rIncreaseAmount;
+            researchPrice = tData.rPrice;
+            researchPriceIncrease = tData.rPriceIncrease;
+
+            //Local Farms Upgrade
+            localFarmsSellIncreaseAmount = tData.lfSellIncreaseAmount;
+            localFarmsWaitIncreaseAmount = tData.lfWaitIncreaseAmount;
+            localFarmsPrice = tData.lfPrice;
+            localFarmsPriceIncrease = tData.lfPriceIncrease;
+
+
+            //Faster Production Upgrade
+            fasterProductionSellDecreaseAmount = tData.fpSellDecreaseAmount;
+            fasterProductionWaitDecreaseAmount = tData.fpWaitDecreaseAmount;
+            fasterProductionPrice = tData.fpPrice;
+            fasterProductionPriceIncrease = tData.fpPriceIncrease;
+
+            //Borrow Ingredients Upgrade
+            borrowIngredientsToastIncreaseAmount = tData.biToastIncreaseAmount;
+            borrowIngredientsNextIncreaseAmount = tData.biNextIncreaseAmount;
+            borrowIngredientsPrice = tData.biPrice;
+            borrowIngredientsPriceIncrease = tData.biPriceIncrease;
+
+            //Loan Upgrade
+            loanSellIncreaseAmount = tData.lSellIncreaseAmount;
+            loanNextIncreaseAmount = tData.lNextIncreaseAmount;
+            loanPrice = tData.lPrice;
+            loanPriceIncrease = tData.lPriceIncrease;
+
+
+            //Bools
+            buttonActive = tData.bActive;
+            idleClickActive = tData.icActive;
+            
+
+            //Delivery
+            maxLoaves = tData.mLoaves;
+            slicesPerLoaf = tData.sPerLoaf;
+
+        }
+        else
+        {
+            switch (sceneNumber)
+            {
+                case 0:
+                    Price = breadPrice;
+                    defaultFile();
+                    break;
+                case 1:
+                    toastPrice *= 1 + (assentionValue / 20000);
+                    Price = toastPrice;
+                    defaultFile();
+                    break;
+                case 2:
+                    butterPrice *= 1 + (assentionValue / 20000);
+                    Price = butterPrice;
+                    defaultFile();
+                    break;
+                case 3:
+                    pbPrice *= 1 + (assentionValue / 20000);
+                    Price = pbPrice;
+                    defaultFile();
+                    break;
+                case 4:
+                    jellyPrice *= 1 + (assentionValue / 20000);
+                    Price = jellyPrice;
+                    defaultFile();
+                    break;
+                case 5:
+                    cinnamonPrice *= 1 + (assentionValue / 20000);
+                    Price = cinnamonPrice;
+                    defaultFile();
+                    break;
+                case 6:
+                    bananaPrice *= 1 + (assentionValue / 20000);
+                    Price = bananaPrice;
+                    defaultFile();
+                    break;
+                case 7:
+                    eggPrice *= 1 + (assentionValue / 20000);
+                    Price = eggPrice;
+                    defaultFile();
+                    break;
+                case 8:
+                    avocadoPrice *= 1 + (assentionValue / 20000);
+                    Price = avocadoPrice;
+                    defaultFile();
+                    break;
+                case 9:
+                    mysteryPrice *= 1 + (assentionValue / 20000);
+                    Price = mysteryPrice;
+                    defaultFile();
+                    break;
+
+            }
+        }
+
+}
+
+
+    public void loadUniversalData() 
+    {
+        UniversalData uData = SaveSystem.loadUniversal(universalFile);
+        if (uData != null)
+        {
+            goldToast = uData.gToast;
+            goldToastAddAmount = uData.gToastAddAmount;
+            chanceOfGoldToast = uData.cogToast;
+            
+
+            assentionValue = uData.aValue;
+            
+
+            sceneNumber = uData.sNumber;
+
+            currentBreadtoToast = uData.cbtToast;
+            currentToasttoButter = uData.cttButter;
+
+
+            maxBreadtoToast = uData.mbtToast;
+            maxToasttoButter = uData.mttButter;
+            maxButtertoPb = uData.mbtPb;
+            maxPbtoJelly = uData.mpbtJelly;
+            maxJellytoCinnamon = uData.mjtCinnamon;
+            maxCinnamontoBanana = uData.mctBanana;
+            maxBananatoEgg = uData.mbtEgg;
+            maxEggtoAvocado = uData.metAvocado;
+            maxAvocadotoMystery = uData.matMystery;
+
+            silverToastersIncreaseAmount = uData.stIncreaseAmount;
+            silverToastersPrice = uData.stPrice;
+            silverToastersPriceIncrease = uData.stPriceIncrease;
+
+            silverRecipesIncreaseAmount = uData.srIncreaseAmount;
+            silverRecipesPrice = uData.srPrice;
+            silverRecipesPriceIncrease = uData.srPriceIncrease;
+
+            silverRatedEmployeesIncreaseAmount = uData.sreIncreaseAmount;
+            silverRatedEmployeesPrice = uData.srePrice;
+            silverRatedEmployeesPriceIncrease = uData.srePriceIncrease;
+
+            diamondToastersIncreaseAmount = uData.dtIncreaseAmount;
+            diamondToastersPrice = uData.dtPrice;
+            diamondToastersPriceIncrease = uData.dtPriceIncrease;
+
+            diamondRecipesIncreaseAmount = uData.drIncreaseAmount;
+            diamondRecipesPrice = uData.drPrice;
+            diamondRecipesPriceIncrease = uData.drPriceIncrease;
+
+            diamondRatedEmployeesIncreaseAmount = uData.dreIncreaseAmount;
+            diamondRatedEmployeesPrice = uData.drePrice;
+            diamondRatedEmployeesPriceIncrease = uData.drePriceIncrease;
+
+            goldToastPlusAmount = uData.gtpAmount;
+            goldToastPlusPrice = uData.gtpPrice;
+            goldToastPlusIdle = uData.gtpIdle;
+
+            breadPrice = uData.breadPrice;
+            toastPrice = uData.toastPrice;
+            butterPrice = uData.butterPrice;
+            pbPrice = uData.pbPrice;
+            jellyPrice = uData.jellyPrice;
+            cinnamonPrice = uData.cinnamonPrice;
+            bananaPrice = uData.bananaPrice;
+            eggPrice = uData.eggPrice;
+            avocadoPrice = uData.avocadoPrice;
+            mysteryPrice = uData.mysteryPrice;
+
+
+        }
+        else
+        {
+            goldToast = 0;
+            goldToastAddAmount = 1;
+            chanceOfGoldToast = 4;
+
+            assentionValue = 0;
+
+            sceneNumber = 0;
+
+            maxBreadtoToast = 125000;
+            maxToasttoButter = 250000;
+            maxButtertoPb = 500000;
+            maxPbtoJelly = 750000;
+            maxJellytoCinnamon = 1000000;
+            maxCinnamontoBanana = 1500000;
+            maxBananatoEgg = 2000000;
+            maxEggtoAvocado = 3000000;
+            maxAvocadotoMystery = 4000000;
+
+
+            silverToastersIncreaseAmount = 1;
+            silverToastersPrice = 5;
+            silverToastersPriceIncrease = 15;
+
+            silverRecipesIncreaseAmount = 0.05f;
+            silverRecipesPrice = 5;
+            silverRecipesPriceIncrease = 15;
+
+            silverRatedEmployeesIncreaseAmount = 1;
+            silverRatedEmployeesPrice = 5;
+            silverRatedEmployeesPriceIncrease = 15;
+
+            diamondToastersIncreaseAmount = 5;
+            diamondToastersPrice = 100;
+            diamondToastersPriceIncrease = 50;
+
+            diamondRecipesIncreaseAmount = 0.10f;
+            diamondRecipesPrice = 100;
+            diamondRecipesPriceIncrease = 50;
+
+            diamondRatedEmployeesIncreaseAmount = 5;
+            diamondRatedEmployeesPrice = 100;
+            diamondRatedEmployeesPriceIncrease = 50;
+
+            goldToastPlusAmount = 0;
+            goldToastPlusPrice = 0;
+            goldToastPlusIdle = 0;
+
+            
+
+        }
+    }
+    #endregion
+    //UPGRADES PEOPLE UPGRADES
+    #region Upgrade Codes
+    //If the money the player has is greater than or equal to the upgrade cost
+    //The amount of toast per click increases by the increase amount set
+    //The amount of money is then subtracted by the upgrade cost
+    //Increase the upgrade cost by the increase cost amount
+    public void MoreToasters()
+    {
+        if(Money >= moreToastersPrice)
+        {
+            toastPlusAmount += moreToastersIncreaseAmount;
+            Money -= moreToastersPrice;
+            moreToastersPrice *= moreToastersPriceIncrease;
+        }
+    }
+
+    //If the money the player has is greater than or equal to the upgrade cost
+    //The sell price for each piece of toast is increased by the increase amount
+    //The amount of money is then subtracted by the upgrade cost
+    //Increase the upgrade cost by the increase cost amount
+    public void HigherQualtiyLoaves()
+    {
+        if(Money >= qualityLoavesPrice)
+        {
+            Price *= 1 + (qualityLoavesIncreaseAmount/100);
+            Money -= qualityLoavesPrice;
+            qualityLoavesPrice *= qualityLoavesPriceIncrease;
+        }
+        sellPriceText.text = "$" + (Price).ToString("F2");
+    }
+
+    //if the idle clicker is active which was determined in the update method then it will move into the rest of the code
+    //if the time remaining on the idle click amount it greater than 0 it reduces it by Time.deltaTime
+    //otherwise it adds the idle click amount to the total toast amount
+    //then it resets the time remaining to the starting wait time
+    public void Employee()
+    {
+        if(idleClickActive == true)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+            }
+            else
+            {
+                ToastAmount += idleToastPlusAmount + goldToastPlusIdle;
+                timeRemaining = idleWaitTime;
+                totalSlices += idleToastPlusAmount + goldToastPlusIdle;
+            }
+        }
+       
+    }
+
+    //If the money the player has is greater than or equal to the upgrade cost
+    //The amount of toast added by the idle clicker is increased by the increase amount
+    //The amount of money is then subtracted by the upgrade cost
+    //Increase the upgrade cost by the increase cost amount
+    public void HireEmployee()
+    {
+        if(Money >= hireEmployeePrice)
+        {
+            idleToastPlusAmount += hireEmployeeIncreaseAmount;
+            Money -= hireEmployeePrice;
+            hireEmployeePrice *= hireEmployeePriceIncrease;
+        }
+    }
+
+
+    //If the money the player has is greater than or equal to the upgrade cost
+    //The amount of toast added by the idle clicker is increased by the increase amount
+    //The amount of money is then subtracted by the upgrade cost
+    //Increase the upgrade cost by the increase cost amount
+    public void TrainEmployee()
+    {
+        if(Money >= trainEmployeePrice && idleWaitTime > minimumIdleWaitTime)
+        {
+            idleWaitTime *= 1 - (trainEmployeeDecreaseAmount/100);
+            Money -= trainEmployeePrice;
+            trainEmployeePrice *= trainEmployeePriceIncrease;
+            if (idleWaitTime < minimumIdleWaitTime)
+            {
+                idleWaitTime = minimumIdleWaitTime;
+            }
+        }
+    }
+
+
+    public void BiggerLoaves()
+    {
+         if(Money >= biggerLoavesPrice)
+        {
+            toastPlusAmount += biggerLoavesToastIncreaseAmount;
+            idleToastPlusAmount += biggerLoavesIdleIncreaseAmount;
+            Money -= biggerLoavesPrice;
+            biggerLoavesPrice *= biggerLoavesPriceIncrease;
+        }
+    }
+
+
+
+    public void Sponsorship1()
+    {
+        switch (sceneNumber)
+        {
+            case 0:
+                if(Money >= sponsorshipPrice)
+                {
+                    maxBreadtoToast -= (int)((sponsorshipIncreaseAmount / 100)*maxBreadtoToast);
+                    Money -= sponsorshipPrice;
+                    sponsorshipPrice *= sponsorshipPriceIncrease;
+                }
+                break;
+            case 1:
+                if (Money >= sponsorshipPrice)
+                {
+                    maxToasttoButter -= (int)((sponsorshipIncreaseAmount / 100) * maxBreadtoToast);
+                    Money -= sponsorshipPrice;
+                    sponsorshipPrice *= sponsorshipPriceIncrease;
+                }
+                break;
+            case 2:
+                if (Money >= sponsorshipPrice)
+                {
+                    maxButtertoPb -= (int)((sponsorshipIncreaseAmount / 100) * maxBreadtoToast);
+                    Money -= sponsorshipPrice;
+                    sponsorshipPrice *= sponsorshipPriceIncrease;
+                }
+                break;
+            case 3:
+                if (Money >= sponsorshipPrice)
+                {
+                    maxPbtoJelly -= (int)((sponsorshipIncreaseAmount / 100) * maxBreadtoToast);
+                    Money -= sponsorshipPrice;
+                    sponsorshipPrice *= sponsorshipPriceIncrease;
+                }
+                break;
+            case 4:
+                if (Money >= sponsorshipPrice)
+                {
+                    maxJellytoCinnamon -= (int)((sponsorshipIncreaseAmount / 100) * maxBreadtoToast);
+                    Money -= sponsorshipPrice;
+                    sponsorshipPrice *= sponsorshipPriceIncrease;
+                }
+                break;
+            case 5:
+                if (Money >= sponsorshipPrice)
+                {
+                    maxCinnamontoBanana -= (int)((sponsorshipIncreaseAmount / 100) * maxBreadtoToast);
+                    Money -= sponsorshipPrice;
+                    sponsorshipPrice *= sponsorshipPriceIncrease;
+                }
+                break;
+            case 6:
+                if (Money >= sponsorshipPrice)
+                {
+                    maxBananatoEgg -= (int)((sponsorshipIncreaseAmount / 100) * maxBreadtoToast);
+                    Money -= sponsorshipPrice;
+                    sponsorshipPrice *= sponsorshipPriceIncrease;
+                }
+                break;
+            case 7:
+                if (Money >= sponsorshipPrice)
+                {
+                    maxEggtoAvocado -= (int)((sponsorshipIncreaseAmount / 100) * maxBreadtoToast);
+                    Money -= sponsorshipPrice;
+                    sponsorshipPrice *= sponsorshipPriceIncrease;
+                }
+                break;
+            case 8:
+                if (Money >= sponsorshipPrice)
+                {
+                    maxAvocadotoMystery -= (int)((sponsorshipIncreaseAmount / 100) * maxBreadtoToast);
+                    Money -= sponsorshipPrice;
+                    sponsorshipPrice *= sponsorshipPriceIncrease;
+                }
+                break;
+        }
+    }
+
+    //If the money the player has is greater than or equal to the upgrade cost
+    //The amount of toast per click increases by the increase amount set
+    //The amount of money is then subtracted by the upgrade cost
+    //Increase the upgrade cost by the increase cost amount
+    public void TwoForOneToasters()
+    {
+        if(Money >= twoForOneToastersPrice)
+        {
+            toastPlusAmount += twoForOneToastersIncreaseAmount;
+            Money -= twoForOneToastersPrice;
+            twoForOneToastersPrice *= twoForOneToastersPriceIncrease;
+        }
+    }
+
+
+    //If the money the player has is greater than or equal to the upgrade cost
+    //The sell price for each piece of toast is increased by the increase amount
+    //The amount of money is then subtracted by the upgrade cost
+    //Increase the upgrade cost by the increase cost amount
+    public void NewspaperAds()
+    {
+        if(Money >= newspaperAdsPrice)
+        {
+            Price *= 1 +(newspaperAdsIncreaseAmount/100);
+            Money -= newspaperAdsPrice;
+            newspaperAdsPrice *= newspaperAdsPriceIncrease;
+        }
+    }
+
+    //If the money the player has is greater than or equal to the upgrade cost
+    //The amount of toast added by the idle clicker is increased by the increase amount
+    //The amount of money is then subtracted by the upgrade cost
+    //Increase the upgrade cost by the increase cost amount
+    public void ExtraShifts()
+    {
+        if (Money >= extraShiftsPrice)
+        {
+            idleToastPlusAmount += extraShiftsIncreaseAmount;
+            Money -= extraShiftsPrice;
+            extraShiftsPrice *= extraShiftsPriceIncrease;
+        }
+    }
+
+
+
+    //If the money the player has is greater than or equal to the upgrade cost
+    //The amount of toast per click increases by the increase amount set
+    //The amount of money is then subtracted by the upgrade cost
+    //Increase the upgrade cost by the increase cost amount
+    public void ThreeForOneToasters()
+    {
+        if (Money >= threeForOnePrice)
+        {
+            toastPlusAmount += threeForOneIncreaseAmount;
+            Money -= threeForOnePrice;
+            threeForOnePrice *= threeForOnePriceIncrease;
+        }
+    }
+
+    //If the money the player has is greater than or equal to the upgrade cost
+    //The amount of toast per click increases by the increase amount set
+    //The amount of money is then subtracted by the upgrade cost
+    //Increase the upgrade cost by the increase cost amount
+    public void FourForOneToasters()
+    {
+        if (Money >= fourForOnePrice)
+        {
+            toastPlusAmount += fourForOneIncreaseAmount;
+            Money -= fourForOnePrice;
+            fourForOnePrice *= fourForOnePriceIncrease;
+        }
+    }
+
+
+
+    public void Research()
+    {
+        switch (sceneNumber)
+        {
+            case 0:
+                if (Money >= researchPrice)
+                {
+                    maxBreadtoToast -= (int)((researchIncreaseAmount / 100) * maxBreadtoToast);
+                    Money -= researchPrice;
+                    researchPrice *= researchPriceIncrease;
+                }
+                break;
+            case 1:
+                if (Money >= researchPrice)
+                {
+                    maxBreadtoToast -= (int)((researchIncreaseAmount / 100) * maxBreadtoToast);
+                    Money -= researchPrice;
+                    researchPrice *= researchPriceIncrease;
+                }
+                break;
+            case 2:
+                if (Money >= researchPrice)
+                {
+                    maxBreadtoToast -= (int)((researchIncreaseAmount / 100) * maxBreadtoToast);
+                    Money -= researchPrice;
+                    researchPrice *= researchPriceIncrease;
+                }
+                break;
+            case 3:
+                if (Money >= researchPrice)
+                {
+                    maxBreadtoToast -= (int)((researchIncreaseAmount / 100) * maxBreadtoToast);
+                    Money -= researchPrice;
+                    researchPrice *= researchPriceIncrease;
+                }
+                break;
+            case 4:
+                if (Money >= researchPrice)
+                {
+                    maxBreadtoToast -= (int)((researchIncreaseAmount / 100) * maxBreadtoToast);
+                    Money -= researchPrice;
+                    researchPrice *= researchPriceIncrease;
+                }
+                break;
+            case 5:
+                if (Money >= researchPrice)
+                {
+                    maxBreadtoToast -= (int)((researchIncreaseAmount / 100) * maxBreadtoToast);
+                    Money -= researchPrice;
+                    researchPrice *= researchPriceIncrease;
+                }
+                break;
+            case 6:
+                if (Money >= researchPrice)
+                {
+                    maxBreadtoToast -= (int)((researchIncreaseAmount / 100) * maxBreadtoToast);
+                    Money -= researchPrice;
+                    researchPrice *= researchPriceIncrease;
+                }
+                break;
+            case 7:
+                if (Money >= researchPrice)
+                {
+                    maxBreadtoToast -= (int)((researchIncreaseAmount / 100) * maxBreadtoToast);
+                    Money -= researchPrice;
+                    researchPrice *= researchPriceIncrease;
+                }
+                break;
+            case 8:
+                if (Money >= researchPrice)
+                {
+                    maxBreadtoToast -= (int)((researchIncreaseAmount / 100) * maxBreadtoToast);
+                    Money -= researchPrice;
+                    researchPrice *= researchPriceIncrease;
+                }
+                break;
+        }
+    }
+
+
+    public void LocalFarms()
+    {
+        if(Money >= localFarmsPrice)
+        {
+            Price *= 1 + (localFarmsSellIncreaseAmount / 100);
+            idleWaitTime *= 1 + (localFarmsWaitIncreaseAmount / 100);
+            Money -= localFarmsPrice;
+            localFarmsPrice *= localFarmsPriceIncrease;
+        }
+        sellPriceText.text = "$" + (Price).ToString("F2");
+    }
+
+
+    public void FasterProduction()
+    {
+        if (Money >= fasterProductionPrice && idleWaitTime > minimumIdleWaitTime)
+        {
+            Price *= 1 - (fasterProductionSellDecreaseAmount / 100);
+            idleWaitTime *= 1 - (fasterProductionWaitDecreaseAmount / 100);
+            Money -= fasterProductionPrice;
+            fasterProductionPrice *= fasterProductionPriceIncrease;
+
+            if (idleWaitTime < minimumIdleWaitTime)
+            {
+                idleWaitTime = minimumIdleWaitTime;
+            }
+        }
+        sellPriceText.text = "$" + (Price).ToString("F2");
+    }
+
+
+    public void BorrowIngredients()
+    {
+        switch (sceneNumber)
+        {
+            case 0:
+                if (Money >= borrowIngredientsPrice)
+                {
+                    maxBreadtoToast += (int)((borrowIngredientsNextIncreaseAmount / 100) * maxBreadtoToast);
+                    toastPlusAmount += borrowIngredientsToastIncreaseAmount;
+                    Money -= borrowIngredientsPrice;
+                    borrowIngredientsPrice *= borrowIngredientsPriceIncrease;
+                }
+                break;
+            case 1:
+                if (Money >= borrowIngredientsPrice)
+                {
+                    maxBreadtoToast += (int)((borrowIngredientsNextIncreaseAmount / 100) * maxBreadtoToast);
+                    toastPlusAmount += borrowIngredientsToastIncreaseAmount;
+                    Money -= borrowIngredientsPrice;
+                    borrowIngredientsPrice *= borrowIngredientsPriceIncrease;
+                }
+                break;
+            case 2:
+                if (Money >= borrowIngredientsPrice)
+                {
+                    maxBreadtoToast += (int)((borrowIngredientsNextIncreaseAmount / 100) * maxBreadtoToast);
+                    toastPlusAmount += borrowIngredientsToastIncreaseAmount;
+                    Money -= borrowIngredientsPrice;
+                    borrowIngredientsPrice *= borrowIngredientsPriceIncrease;
+                }
+                break;
+            case 3:
+                if (Money >= borrowIngredientsPrice)
+                {
+                    maxBreadtoToast += (int)((borrowIngredientsNextIncreaseAmount / 100) * maxBreadtoToast);
+                    toastPlusAmount += borrowIngredientsToastIncreaseAmount;
+                    Money -= borrowIngredientsPrice;
+                    borrowIngredientsPrice *= borrowIngredientsPriceIncrease;
+                }
+                break;
+            case 4:
+                if (Money >= borrowIngredientsPrice)
+                {
+                    maxBreadtoToast += (int)((borrowIngredientsNextIncreaseAmount / 100) * maxBreadtoToast);
+                    toastPlusAmount += borrowIngredientsToastIncreaseAmount;
+                    Money -= borrowIngredientsPrice;
+                    borrowIngredientsPrice *= borrowIngredientsPriceIncrease;
+                }
+                break;
+            case 5:
+                if (Money >= borrowIngredientsPrice)
+                {
+                    maxBreadtoToast += (int)((borrowIngredientsNextIncreaseAmount / 100) * maxBreadtoToast);
+                    toastPlusAmount += borrowIngredientsToastIncreaseAmount;
+                    Money -= borrowIngredientsPrice;
+                    borrowIngredientsPrice *= borrowIngredientsPriceIncrease;
+                }
+                break;
+            case 6:
+                if (Money >= borrowIngredientsPrice)
+                {
+                    maxBreadtoToast += (int)((borrowIngredientsNextIncreaseAmount / 100) * maxBreadtoToast);
+                    toastPlusAmount += borrowIngredientsToastIncreaseAmount;
+                    Money -= borrowIngredientsPrice;
+                    borrowIngredientsPrice *= borrowIngredientsPriceIncrease;
+                }
+                break;
+            case 7:
+                if (Money >= borrowIngredientsPrice)
+                {
+                    maxBreadtoToast += (int)((borrowIngredientsNextIncreaseAmount / 100) * maxBreadtoToast);
+                    toastPlusAmount += borrowIngredientsToastIncreaseAmount;
+                    Money -= borrowIngredientsPrice;
+                    borrowIngredientsPrice *= borrowIngredientsPriceIncrease;
+                }
+                break;
+            case 8:
+                if (Money >= borrowIngredientsPrice)
+                {
+                    maxBreadtoToast += (int)((borrowIngredientsNextIncreaseAmount / 100) * maxBreadtoToast);
+                    toastPlusAmount += borrowIngredientsToastIncreaseAmount;
+                    Money -= borrowIngredientsPrice;
+                    borrowIngredientsPrice *= borrowIngredientsPriceIncrease;
+                }
+                break;
+        }
+    }
+
+    public void Loan()
+    {
+        switch (sceneNumber)
+        {
+            case 0:
+                if (Money >= loanPrice)
+                {
+                    maxBreadtoToast += (int)((loanNextIncreaseAmount / 100) * maxBreadtoToast);
+                    Price *= 1 + (loanSellIncreaseAmount/100);
+                    Money -= loanPrice;
+                    loanPrice *= loanPriceIncrease;
+                }
+                break;
+            case 1:
+                if (Money >= loanPrice)
+                {
+                    maxBreadtoToast += (int)((loanNextIncreaseAmount / 100) * maxBreadtoToast);
+                    Price *= 1 + (loanSellIncreaseAmount / 100);
+                    Money -= loanPrice;
+                    loanPrice *= loanPriceIncrease;
+                }
+                break;
+            case 2:
+                if (Money >= loanPrice)
+                {
+                    maxBreadtoToast += (int)((loanNextIncreaseAmount / 100) * maxBreadtoToast);
+                    Price *= 1 + (loanSellIncreaseAmount / 100);
+                    Money -= loanPrice;
+                    loanPrice *= loanPriceIncrease;
+                }
+                break;
+            case 3:
+                if (Money >= loanPrice)
+                {
+                    maxBreadtoToast += (int)((loanNextIncreaseAmount / 100) * maxBreadtoToast);
+                    Price *= 1 + (loanSellIncreaseAmount / 100);
+                    Money -= loanPrice;
+                    loanPrice *= loanPriceIncrease;
+                }
+                break;
+            case 4:
+                if (Money >= loanPrice)
+                {
+                    maxBreadtoToast += (int)((loanNextIncreaseAmount / 100) * maxBreadtoToast);
+                    Price *= 1 + (loanSellIncreaseAmount / 100);
+                    Money -= loanPrice;
+                    loanPrice *= loanPriceIncrease;
+                }
+                break;
+            case 5:
+                if (Money >= loanPrice)
+                {
+                    maxBreadtoToast += (int)((loanNextIncreaseAmount / 100) * maxBreadtoToast);
+                    Price *= 1 + (loanSellIncreaseAmount / 100);
+                    Money -= loanPrice;
+                    loanPrice *= loanPriceIncrease;
+                }
+                break;
+            case 6:
+                if (Money >= loanPrice)
+                {
+                    maxBreadtoToast += (int)((loanNextIncreaseAmount / 100) * maxBreadtoToast);
+                    Price *= 1 + (loanSellIncreaseAmount / 100);
+                    Money -= loanPrice;
+                    loanPrice *= loanPriceIncrease;
+                }
+                break;
+            case 7:
+                if (Money >= loanPrice)
+                {
+                    maxBreadtoToast += (int)((loanNextIncreaseAmount / 100) * maxBreadtoToast);
+                    Price *= 1 + (loanSellIncreaseAmount / 100);
+                    Money -= loanPrice;
+                    loanPrice *= loanPriceIncrease;
+                }
+                break;
+            case 8:
+                if (Money >= loanPrice)
+                {
+                    maxBreadtoToast += (int)((loanNextIncreaseAmount / 100) * maxBreadtoToast);
+                    Price *= 1 + (loanSellIncreaseAmount / 100);
+                    Money -= loanPrice;
+                    loanPrice *= loanPriceIncrease;
+                }
+                break;
+        }
+        sellPriceText.text = "$" + (Price).ToString("F2");
+    }
+
+
+    public void silverToasters()
+    {
+        if(silverToastersPrice <= goldToast)
+        {
+            goldToastPlusAmount += silverToastersIncreaseAmount;
+            goldToast -= (int)silverToastersPrice;
+            silverToastersPrice += silverToastersPriceIncrease;
+        }
+    }
+
+
+    public void silverRecipes()
+    {
+        if(silverRecipesPrice <= goldToast)
+        {
+            goldToastPlusPrice += silverRecipesIncreaseAmount;
+            goldToast -= (int)silverRecipesPrice;
+            silverRecipesPrice += silverRecipesPriceIncrease;
+        }
+    }
+
+    public void silverRatedEmployees()
+    {
+        if(silverRatedEmployeesPrice <= goldToast)
+        {
+            goldToastPlusIdle += silverRatedEmployeesIncreaseAmount;
+            goldToast -= (int)silverRatedEmployeesPrice;
+            silverRatedEmployeesPrice += silverRatedEmployeesPriceIncrease;
+        }
+    }
+
+    public void diamondToasters()
+    {
+        if(diamondToastersPrice <= goldToast)
+        {
+            goldToastPlusAmount += diamondToastersPrice;
+            goldToast -= (int)diamondToastersPrice;
+            diamondToastersPrice += diamondToastersPriceIncrease;
+
+        }
+    }
+
+    public void diamondRecipes()
+    {
+        if(diamondRecipesPrice <= goldToast)
+        {
+            goldToastPlusPrice += diamondRecipesIncreaseAmount;
+            goldToast -= (int)diamondRecipesPrice;
+            diamondRecipesPrice += diamondRecipesPriceIncrease;
+        }
+    }
+
+
+    public void diamondRatedEmployees()
+    {
+        if(diamondRatedEmployeesPrice <= goldToast)
+        {
+            goldToastPlusIdle += diamondRatedEmployeesIncreaseAmount;
+            goldToast -= (int)diamondRatedEmployeesPrice;
+            diamondRatedEmployeesPrice += diamondRatedEmployeesPriceIncrease;
+        }
+    }
+
+    #endregion
+
+    public void toastObjectConveyer(GameObject Sprite)
+    {
+        var clone = Instantiate(Sprite) as GameObject;
+        clone.transform.SetParent(Canvas.transform, false);
+       
+    }
+
+
+
+
+    public void enableMenu()
+    {
+        Debug.Log("Brooklyn you coded it right, c# is a piece of shit");
+        menu.SetActive(true);
+    }
+    public void disableMenu()
+    {
+        menu.SetActive(false);
+    }
+
+
+    public void titleScreen()
+    {
+        SaveToastData();
+        SaveUniversalData();
+
+        SceneManager.LoadScene("Title");
+        
+    }
+
+
+    public void BreadLoad()
+    {
+        sceneNumber = 0;
+        SaveUniversalData();
+        changeFile();
+        loadToastData(sceneFile);
+    }
+
+    public void ToastLoad()
+    {
+        sceneNumber = 1;
+        SaveUniversalData();
+        changeFile();
+        loadToastData(sceneFile);
+    }
+
+    public void ButterLoad()
+    {
+        sceneNumber = 2;
+        SaveUniversalData();
+        changeFile();
+        loadToastData(sceneFile);
+    }
+
+    public void PBLoad()
+    {
+        sceneNumber = 3;
+        SaveUniversalData();
+        changeFile();
+        loadToastData(sceneFile);
+    }
+
+    public void JellyLoad()
+    {
+        sceneNumber = 4;
+        SaveUniversalData();
+        changeFile();
+        loadToastData(sceneFile);
+    }
+
+    public void CinnamonLoad()
+    {
+        sceneNumber = 5;
+        SaveUniversalData();
+        changeFile();
+        loadToastData(sceneFile);
+    }
+
+    public void BananaLoad()
+    {
+        sceneNumber = 6;
+        SaveUniversalData();
+        changeFile();
+        loadToastData(sceneFile);
+    }
+
+    public void EggLoad()
+    {
+        sceneNumber = 7;
+        SaveUniversalData();
+        changeFile();
+        loadToastData(sceneFile);
+    }
+
+    public void AvocadoLoad()
+    {
+        sceneNumber = 8;
+        SaveUniversalData();
+        changeFile();
+        loadToastData(sceneFile);
+    }
+
+    public void MysteryLoad()
+    {
+        sceneNumber = 9;
+        SaveUniversalData();
+        changeFile();
+        loadToastData(sceneFile);
+    }
+
+
+    public void changeFile()
+    {
+        switch (sceneNumber)
+        {
+            case 0:
+                sceneFile = breadFile;
+                break;
+            case 1:
+                sceneFile = toastedToastFile;
+                break;
+            case 2:
+                sceneFile = butterFile;
+                break;
+            case 3:
+                sceneFile = pbFile;
+                break;
+            case 4:
+                sceneFile = jellyFile;
+                break;
+            case 5:
+                sceneFile = cinnamonFile;
+                break;
+            case 6:
+                sceneFile = bananaFile;
+                break;
+            case 7:
+                sceneFile = eggFile;
+                break;
+            case 8:
+                sceneFile = avocadoFile;
+                break;
+            case 9:
+                sceneFile = mysteryFile;
+                break;
+
+        }
+    }
+
+
+
+    public void SpecialBack()
+    {
+        switch (sceneNumber)
+        {
+            case 0:
+                SceneManager.LoadScene("Toast");
+                Debug.Log("Toast scene loaded");
+                break;
+            case 1:
+                SceneManager.LoadScene("Toasted");
+                Debug.Log("Toasted scene loaded");
+                break;
+                   
+
+
+        }
+
+
+
+    }
+
+
+
+
+
+
+    public void defaultFile()
+    {
+
+
+
+        toastPlusAmount = 1;
+
+        Money = 0;
+        ToastAmount = 0;
+        totalSlices = 0;
+
+        //Idle
+        idleWaitTime = 15;
+        idleToastPlusAmount = 0;
+
+
+        //More Toasters Upgrade
+        moreToastersIncreaseAmount = 1;
+        moreToastersPrice = 10;
+        moreToastersPriceIncrease = 1.25f;
+
+        //Higher Quality Loaves Upgrade
+
+        qualityLoavesPrice = 15;
+        qualityLoavesPriceIncrease = 1.5f;
+        qualityLoavesIncreaseAmount = 5;
+
+
+        //Hire Employees Upgrade
+
+        hireEmployeeIncreaseAmount = 1;
+        hireEmployeePrice = 25;
+        hireEmployeePriceIncrease = 1.25f;
+
+        //Train Employee Upgrade
+
+        trainEmployeeDecreaseAmount = 5f;
+        trainEmployeePrice = 30;
+        trainEmployeePriceIncrease = 1.5f;
+
+        //Sponsorship Upgrade
+
+        sponsorshipIncreaseAmount = 1f;
+        sponsorshipPrice = 50;
+        sponsorshipPriceIncrease = 3.5f;
+
+        //Two for One Toasters Upgrade
+        twoForOneToastersIncreaseAmount = 2;
+        twoForOneToastersPrice = 50;
+        twoForOneToastersPriceIncrease = 1.4f;
+
+        //Newspaper Ads Upgrade
+        newspaperAdsIncreaseAmount = 10;
+        newspaperAdsPrice = 75;
+        newspaperAdsPriceIncrease = 2.3f;
+
+        //Extra Shifts Upgrade
+        extraShiftsIncreaseAmount = 5;
+        extraShiftsPrice = 100;
+        extraShiftsPriceIncrease = 3.05f;
+
+        threeForOneIncreaseAmount = 3;
+        threeForOnePrice = 150;
+        threeForOnePriceIncrease = 1.65f;
+
+        //Four for One Toasters Upgrade
+        fourForOneIncreaseAmount = 4;
+        fourForOnePrice = 450;
+        fourForOnePriceIncrease = 1.90f;
+
+        //Bigger Loaves Upgrade
+        biggerLoavesToastIncreaseAmount = 5;
+        biggerLoavesIdleIncreaseAmount = 5;
+        biggerLoavesPrice = 1250;
+        biggerLoavesPriceIncrease = 4.25f;
+
+        //Research Upgrade
+        researchIncreaseAmount = 2.5f;
+        researchPrice = 5000;
+        researchPriceIncrease = 7.5f;
+
+        //Local Farms Upgrade
+        localFarmsSellIncreaseAmount = 15;
+        localFarmsWaitIncreaseAmount = 15;
+        localFarmsPrice = 1500;
+        localFarmsPriceIncrease = 3.25f;
+
+        //Faster Production Upgrade
+        fasterProductionSellDecreaseAmount = 15;
+        fasterProductionWaitDecreaseAmount = 15;
+        fasterProductionPrice = 1500;
+        fasterProductionPriceIncrease = 3.25f;
+
+        //Borrow Ingredients Upgrade
+        borrowIngredientsToastIncreaseAmount = 25;
+        borrowIngredientsNextIncreaseAmount = 5;
+        borrowIngredientsPrice = 10000;
+        borrowIngredientsPriceIncrease = 6.75f;
+
+        //Loan Upgrade
+        loanSellIncreaseAmount = 20;
+        loanNextIncreaseAmount = 5.5f;
+        loanPrice = 12500;
+        loanPriceIncrease = 5.5f;
+
+        //Bools
+        buttonActive = true;
+        idleClickActive = true;
+
+        SaveToastData();
+    }
+
+    public void AddAssention()
+    {
+        assentionValue++;
+    }
+
+    public void Assention()
+    {
+        tempSceneNumber = sceneNumber;
+        for(int i = 0; i < 10; i++)
+        {
+            sceneNumber = i;
+            switch(sceneNumber)
+            {
+                case 0:
+                    changeFile();
+                    Debug.Log("The scene number is: " + sceneNumber);
+                    Debug.Log("The scene file is: " + sceneFile);
+                    Debug.Log("The price is: " + Price);
+                    breadPrice *= (1 + (assentionValue / 20000));
+                    Debug.Log("The price is: " + Price + ", the bread price is: " + breadPrice); 
+                    sellPriceText.text = "$" + (Price).ToString("F2");
+                    Debug.Log("The new price is: " + Price);
+
+                    defaultFile();
+                    Debug.Log("Price after loading default file: " + Price);
+                    SaveToastData();
+                    Debug.Log("The price after saving the toast data: " + Price);
+
+                    
+                    break;
+                case 1:
+                    changeFile();
+                    Debug.Log("The scene number is: " + sceneNumber);
+                    Debug.Log("The scene file is: " + sceneFile);
+                    Debug.Log("The price is: " + Price);
+                    toastPrice *= 1 + (assentionValue / 20000);
+                    defaultFile();
+                    SaveToastData();
+                    sellPriceText.text = "$" + (Price).ToString("F2");
+                    break;
+                case 2:
+                    changeFile();
+                    butterPrice *= 1 + (assentionValue / 20000);
+                    defaultFile();
+                    SaveToastData();
+                    break;
+                case 3:
+                    changeFile();
+                    pbPrice *= 1 + (assentionValue / 20000);
+                    defaultFile();
+                    SaveToastData();
+                    break;
+                case 4:
+                    changeFile();
+                    jellyPrice *= 1 + (assentionValue / 20000);
+                    defaultFile();
+                    SaveToastData();
+                    break;
+                case 5:
+                    changeFile();
+                    cinnamonPrice *= 1 + (assentionValue / 20000);
+                    defaultFile();
+                    SaveToastData();
+                    break;
+                case 6:
+                    changeFile();
+                    bananaPrice *= 1 + (assentionValue / 20000);
+                    defaultFile();
+                    SaveToastData();
+                    break;
+                case 7:
+                    changeFile();
+                    eggPrice *= 1 + (assentionValue / 20000);
+                    defaultFile();
+                    SaveToastData();
+                    break;
+                case 8:
+                    changeFile();
+                    avocadoPrice *= 1 + (assentionValue / 20000);
+                    defaultFile();
+                    SaveToastData();
+                    break;
+                case 9:
+                    changeFile();
+                    mysteryPrice *= 1 + (assentionValue / 20000);
+                    defaultFile();
+                    SaveToastData();
+                    break;
+
+            }
+
+            
+
+
+        }
+        sceneNumber = tempSceneNumber;
+        Debug.Log("The scene number is: " + sceneNumber);
+        switch (sceneNumber)
+        {
+            case 0:
+                Price = breadPrice;
+                break;
+            case 1:
+                Price = toastPrice;
+                break;
+            case 2:
+                Price = butterPrice;
+                break;
+            case 3:
+                Price = pbPrice;
+                break;
+            case 4:
+                Price = jellyPrice;
+                break;
+            case 5:
+                Price = cinnamonPrice;
+                break;
+            case 6:
+                Price = bananaPrice;
+                break;
+            case 7:
+                Price = eggPrice;
+                break;
+            case 8:
+                Price = avocadoPrice;
+                break;
+            case 9:
+                Price = mysteryPrice;
+                break;
+        }
+
+        assentionValue = 0;
+        sellPriceText.text = "$" + (Price).ToString("F2");
+    }
+
+
+
+
+
+    public void Reset()
+    {
+        switch (sceneNumber)
+        {
+            case 0:
+                Price = breadPrice;
+                defaultFile();
+                SaveToastData();
+                break;
+            case 1:
+                Price = toastPrice;
+                defaultFile();
+                SaveToastData();
+                break;
+            case 2:
+                Price = butterPrice;
+                defaultFile();
+                SaveToastData();
+                break;
+            case 3:
+                Price = pbPrice;
+                defaultFile();
+                SaveToastData();
+                break;
+            case 4:
+                Price = jellyPrice;
+                defaultFile();
+                SaveToastData();
+                break;
+            case 5:
+                Price = cinnamonPrice;
+                defaultFile();
+                SaveToastData();
+                break;
+            case 6:
+                Price = bananaPrice;
+                defaultFile();
+                SaveToastData();
+                break;
+            case 7:
+                Price = eggPrice;
+                defaultFile();
+                SaveToastData();
+                break;
+            case 8:
+                Price = avocadoPrice;
+                defaultFile();
+                SaveToastData();
+                break;
+            case 9:
+                Price = mysteryPrice;
+                defaultFile();
+                SaveToastData();
+                break;
+
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+}
